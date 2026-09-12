@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZYROX // Custom Minecraft Utility Client (v2.4.1)</title>
+    <title>ZYROX</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -67,23 +66,14 @@
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <span class="text-xl font-mono font-bold tracking-tighter text-[#4ade80] bg-[#1a1a1a] px-2 py-1 border border-[#2e2e2e]">ZYROX</span>
-                <span class="text-xs font-mono text-[#737373]">v2.4.1-release</span>
+                <span class="text-xs font-mono text-[#737373]">Alpha Page</span>
             </div>
 
             <nav class="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-wider text-[#737373]">
-                <a href="#features" class="hover:text-[#4ade80] transition-colors">Modules</a>
-                <a href="#benchmark" class="hover:text-[#4ade80] transition-colors">Benchmarks</a>
-                <a href="#changelog" class="hover:text-[#4ade80] transition-colors">Changelog</a>
-                <a href="#downloads" class="hover:text-[#4ade80] transition-colors">Downloads</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-[#1a1a1a] border border-[#2e2e2e] text-xs font-mono text-[#e5e5e5] hover:border-[#4ade80] transition-colors">
-                    GitHub
-                </a>
-                <a href="#downloads" class="px-4 py-1.5 bg-[#4ade80] text-[#0d0d0d] font-mono font-bold text-xs rounded-none hover:bg-[#22c55e] transition-colors">
-                    Download .jar
-                </a>
+    
             </div>
         </div>
     </header>
@@ -94,7 +84,7 @@
             <!-- Left Column: Technical Identity -->
             <div class="lg:col-span-7 space-y-6">
                 <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-[#1a1a1a] border border-[#2e2e2e] text-xs font-mono text-[#4ade80]">
-                    <span>[SYS_READY]</span> Minecraft 1.20.4 Forge/Fabric Injection
+                    <span>-</span> Launcher
                 </div>
 
                 <h1 class="text-5xl sm:text-6xl lg:text-7xl font-mono font-bold uppercase tracking-tight text-[#e5e5e5]">
@@ -102,182 +92,14 @@
                 </h1>
 
                 <p class="text-lg font-mono text-[#737373] max-w-xl leading-relaxed">
-                    Custom 1.20.4 Utility Client for Anarchy and PvP. Zero bloatware, direct memory hooks, and sub-millisecond packet manipulation.
+                    This is the launcher for Zyrox
                 </p>
 
                 <div class="flex flex-wrap items-center gap-4 pt-2">
                     <a href="#downloads" class="px-6 py-3 bg-[#4ade80] text-[#0d0d0d] font-mono font-bold text-sm rounded-none hover:bg-[#22c55e] transition-colors flex items-center gap-2">
-                        <span>// DOWNLOAD_CLIENT_V2.4.1</span>
-                    </a>
-                    <a href="#features" class="px-6 py-3 bg-[#1a1a1a] border border-[#2e2e2e] text-[#e5e5e5] font-mono text-sm rounded-none hover:border-[#4ade80] transition-colors">
-                        View Module Specs
+                        <span>Download</span>
                     </a>
                 </div>
-
-                <div class="pt-4 font-mono text-xs text-[#737373] flex items-center gap-6">
-                    <div>SHA-256: <span class="text-[#e5e5e5]">8f92b4c1...3e9a</span></div>
-                    <div>License: <span class="text-[#e5e5e5]">GPLv3</span></div>
-                </div>
-            </div>
-
-            <!-- Right Column: Real In-Game Client Interface / Terminal Preview -->
-            <div class="lg:col-span-5">
-                <div class="sharp-card p-3 font-mono text-xs">
-                    <!-- Window Header -->
-                    <div class="bg-[#0d0d0d] p-3 border border-[#2e2e2e] flex items-center justify-between mb-3 text-[#737373]">
-                        <span class="text-[#4ade80]">zyrox_hud.cfg // Active Profile: 2b2t_main</span>
-                        <span>FPS: 284 | TPS: 19.92</span>
-                    </div>
-
-                    <!-- Client ClickGUI / HUD Simulation -->
-                    <div class="bg-[#111111] p-4 border border-[#2e2e2e] space-y-3">
-                        <div class="flex justify-between items-center pb-2 border-b border-[#2e2e2e]">
-                            <span class="text-[#e5e5e5] font-bold">RENDER MODULES</span>
-                            <span class="text-[#4_ade80] text-[10px] bg-[#1a1a1a] px-2 py-0.5 text-[#4ade80] border border-[#2e2e2e]">ENABLED</span>
-                        </div>
-                        <div class="space-y-1.5 text-[#737373]">
-                            <div class="flex justify-between p-2 bg-[#1a1a1a] border border-[#2e2e2e]">
-                                <span class="text-[#e5e5e5]">ESP (Player / Chest)</span>
-                                <span class="text-[#4ade80]">ON (200+ FPS)</span>
-                            </div>
-                            <div class="flex justify-between p-2 bg-[#1a1a1a] border border-[#2e2e2e]">
-                                <span class="text-[#e5e5e5]">Baritone Pathfinding A*</span>
-                                <span class="text-[#4ade80]">50 Chunks/sec</span>
-                            </div>
-                            <div class="flex justify-between p-2 bg-[#1a1a1a] border border-[#2e2e2e]">
-                                <span class="text-[#e5e5e5]">Freecam / Velocity 0%</span>
-                                <span class="text-[#4ade80]">BYPASS</span>
-                            </div>
-                        </div>
-                        <div class="p-2 bg-[#0d0d0d] border border-[#2e2e2e] text-[#4ade80] text-[11px]">
-                            &gt; Injecting mixins into net.minecraft.client.ClientEngine... [OK]
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="features" class="py-24 px-6 border-b border-[#2e2e2e]">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-16">
-                <span class="text-xs font-mono text-[#4ade80] bg-[#1a1a1a] px-2.5 py-1 border border-[#2e2e2e]">CORE MODULES & PERFORMANCE</span>
-                <h2 class="text-3xl sm:text-4xl font-mono font-bold uppercase tracking-tight text-[#e5e5e5] mt-4">Engineered for Latency Reduction</h2>
-            </div>
-
-            <!-- Asymmetric 2-Column Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <!-- Feature 1 -->
-                <div class="sharp-card p-6 flex flex-col justify-between space-y-6">
-                    <div>
-                        <div class="font-mono text-xs text-[#4ade80] mb-2">[MODULE_01] RENDER PIPELINE</div>
-                        <h3 class="text-xl font-mono font-bold text-[#e5e5e5] mb-2">Optimized ESP & Occlusion Culling</h3>
-                        <p class="text-sm font-sans text-[#737373] leading-relaxed">
-                            ESP renders through walls at 200+ FPS on integrated graphics using custom OpenGL vertex buffer object allocation.
-                        </p>
-                    </div>
-                    <div class="bg-[#0d0d0d] p-3 border border-[#2e2e2e] font-mono text-xs text-[#e5e5e5]">
-                        &gt; glBufferData(GL_ARRAY_BUFFER, 4096, ptr, GL_STATIC_DRAW); // 0.12ms
-                    </div>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="sharp-card p-6 flex flex-col justify-between space-y-6">
-                    <div>
-                        <div class="font-mono text-xs text-[#4ade80] mb-2">[MODULE_02] AUTOMATION</div>
-                        <h3 class="text-xl font-mono font-bold text-[#e5e5e5] mb-2">Baritone A* Terrain Pathfinding</h3>
-                        <p class="text-sm font-sans text-[#737373] leading-relaxed">
-                            Pathfinding A* bot calculates optimal terrain traversal across 50 chunks/sec with zero thread blocking on the main render loop.
-                        </p>
-                    </div>
-                    <div class="bg-[#0d0d0d] p-3 border border-[#2e2e2e] font-mono text-xs text-[#e5e5e5]">
-                        &gt; a_star_calc --chunks=50 --heuristic=euclidean [SUCCESS]
-                    </div>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="sharp-card p-6 flex flex-col justify-between space-y-6">
-                    <div>
-                        <div class="font-mono text-xs text-[#4ade80] mb-2">[MODULE_03] NETWORK STACK</div>
-                        <h3 class="text-xl font-mono font-bold text-[#e5e5e5] mb-2">Bypass & Packet Filter</h3>
-                        <p class="text-sm font-sans text-[#737373] leading-relaxed">
-                            Bypass strict anti-cheat hooks on AAC and GrimAC with randomized packet jitter and automatic velocity cancellation.
-                        </p>
-                    </div>
-                    <div class="bg-[#0d0d0d] p-3 border border-[#2e2e2e] font-mono text-xs text-[#e5e5e5]">
-                        &gt; packet_intercept --cancellable=true --jitter=12ms
-                    </div>
-                </div>
-
-                <!-- Feature 4 -->
-                <div class="sharp-card p-6 flex flex-col justify-between space-y-6">
-                    <div>
-                        <div class="font-mono text-xs text-[#4ade80] mb-2">[MODULE_04] MEMORY MANAGEMENT</div>
-                        <h3 class="text-xl font-mono font-bold text-[#e5e5e5] mb-2">Garbage Collection Tuner</h3>
-                        <p class="text-sm font-sans text-[#737373] leading-relaxed">
-                            Eliminates JVM garbage collection stutter spikes by forcing ZGC region compaction during high-intensity combat.
-                        </p>
-                    </div>
-                    <div class="bg-[#0d0d0d] p-3 border border-[#2e2e2e] font-mono text-xs text-[#e5e5e5]">
-                        &gt; -XX:+UseZGC -XX:ZAllocationSpikeTolerance=5
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="benchmark" class="py-24 px-6 border-b border-[#2e2e2e] bg-[#111111]/30">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div class="lg:col-span-5 space-y-6">
-                <span class="text-xs font-mono text-[#4ade80] bg-[#1a1a1a] px-2.5 py-1 border border-[#2e2e2e]">PERFORMANCE METRICS</span>
-                <h2 class="text-3xl font-mono font-bold uppercase tracking-tight text-[#e5e5e5]">Raw Benchmark Comparison</h2>
-                <p class="text-sm font-sans text-[#737373] leading-relaxed">
-                    Tested on Minecraft 1.20.4 (Fabric Loader, OpenJDK 21, i7-13700K, RTX 4070). Zyrox consumes 42% less RAM and outputs 2.4x higher frame rates under heavy entity load compared to vanilla distributions.
-                </p>
-            </div>
-
-            <div class="lg:col-span-7">
-                <div class="sharp-card p-6 font-mono text-xs space-y-4">
-                    <div class="flex justify-between items-center pb-3 border-b border-[#2e2e2e] text-[#737373]">
-                        <span>DISTRIBUTION</span>
-                        <span>AVG FPS</span>
-                        <span>RAM ALLOC</span>
-                    </div>
-                    <div class="space-y-3">
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-[#4ade80] font-bold">Zyrox Client v2.4.1</span>
-                                <span class="text-[#e5e5e5]">312 FPS</span>
-                                <span class="text-[#e5e5e5]">1.4 GB</span>
-                            </div>
-                            <div class="w-full bg-[#0d0d0d] h-2 border border-[#2e2e2e]">
-                                <div class="bg-[#4ade80] h-full" style="width: 90%;"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-[#737373]">Vanilla Fabric 1.20.4</span>
-                                <span class="text-[#737373]">128 FPS</span>
-                                <span class="text-[#737373]">2.8 GB</span>
-                            </div>
-                            <div class="w-full bg-[#0d0d0d] h-2 border border-[#2e2e2e]">
-                                <div class="bg-[#737373] h-full" style="width: 45%;"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-[#737373]">Vanilla Forge 1.20.4</span>
-                                <span class="text-[#737373]">92 FPS</span>
-                                <span class="text-[#737373]">4.2 GB</span>
-                            </div>
-                            <div class="w-full bg-[#0d0d0d] h-2 border border-[#2e2e2e]">
-                                <div class="bg-[#737373] h-full" style="width: 30%;"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -293,78 +115,14 @@
             <div class="space-y-6">
                 <div class="sharp-card p-6">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-[#2e2e2e] font-mono text-xs">
-                        <span class="text-[#4ade80] font-bold">VERSION 2.4.1-RELEASE</span>
+                        <span class="text-[#4ade80] font-bold">Closed Alpha</span>
                         <span class="text-[#737373]">SEPTEMBER 12, 2026</span>
                     </div>
                     <ul class="space-y-2 font-mono text-xs text-[#737373] list-disc list-inside">
-                        <li>Updated Baritone pathfinder to support 1.20.4 snapshot chunk formats.</li>
-                        <li>Fixed GLFW context crash on AMD Radeon Linux open-source drivers.</li>
-                        <li>Added custom GrimAC velocity mitigation vector.</li>
+                        <li>Join the discord to apply</li>
+                        <li>Closed Alpha will only has a few features</li>
                     </ul>
                 </div>
-
-                <div class="sharp-card p-6">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-[#2e2e2e] font-mono text-xs">
-                        <span class="text-[#e5e5e5] font-bold">VERSION 2.3.0-STABLE</span>
-                        <span class="text-[#737373]">AUGUST 24, 2026</span>
-                    </div>
-                    <ul class="space-y-2 font-mono text-xs text-[#737373] list-disc list-inside">
-                        <li>Initial port to Java 21 ZGC memory management.</li>
-                        <li>Rewritten ClickGUI with hardware accelerated NanoVG renderer.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="downloads" class="py-24 px-6 border-b border-[#2e2e2e] bg-[#1a1a1a]/50">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-16">
-                <span class="text-xs font-mono text-[#4ade80] bg-[#1a1a1a] px-2.5 py-1 border border-[#2e2e2e]">DISTRIBUTION MATRIX</span>
-                <h2 class="text-3xl sm:text-4xl font-mono font-bold uppercase tracking-tight text-[#e5e5e5] mt-4">Binary Distribution</h2>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse border border-[#2e2e2e] font-mono text-xs">
-                    <thead>
-                        <tr class="bg-[#0d0d0d] border-b border-[#2e2e2e] text-[#4ade80]">
-                            <th class="p-4 uppercase">Loader / Platform</th>
-                            <th class="p-4 uppercase">Version</th>
-                            <th class="p-4 uppercase">Size</th>
-                            <th class="p-4 uppercase">SHA-256 Checksum</th>
-                            <th class="p-4 uppercase text-right">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-[#2e2e2e] bg-[#1a1a1a]">
-                        <tr class="hover:bg-[#0d0d0d] transition-colors">
-                            <td class="p-4 font-bold text-[#e5e5e5]">Fabric Universal (.jar)</td>
-                            <td class="p-4 text-[#737373]">v2.4.1</td>
-                            <td class="p-4 text-[#737373]">4.8 MB</td>
-                            <td class="p-4 text-[#737373]">8f92b4c1...3e9a</td>
-                            <td class="p-4 text-right">
-                                <button onclick="triggerDownload('Fabric v2.4.1')" class="px-4 py-2 bg-[#4ade80] text-[#0d0d0d] font-bold uppercase rounded-none hover:bg-[#22c55e] transition-colors">
-                                    Download
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-[#0d0d0d] transition-colors">
-                            <td class="p-4 font-bold text-[#e5e5e5]">Forge Installer (.jar)</td>
-                            <td class="p-4 text-[#737373]">v2.4.1</td>
-                            <td class="p-4 text-[#737373]">5.2 MB</td>
-                            <td class="p-4 text-[#737373]">2c41e98f...7b11</td>
-                            <td class="p-4 text-right">
-                                <button onclick="triggerDownload('Forge v2.4.1')" class="px-4 py-2 bg-[#1a1a1a] border border-[#2e2e2e] text-[#e5e5e5] font-bold uppercase rounded-none hover:border-[#4ade80] transition-colors">
-                                    Download
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="download-notification" class="hidden mt-6 p-4 bg-[#4ade80] text-[#0d0d0d] font-mono font-bold text-xs uppercase flex items-center justify-between border border-[#2e2e2e]">
-                <span id="download-msg">[SUCCESS] Initializing binary transfer...</span>
-                <span>SHA-256 MATCH VERIFIED</span>
             </div>
         </div>
     </section>
@@ -372,13 +130,13 @@
     <footer class="bg-[#0d0d0d] py-12 px-6 font-mono text-xs border-t border-[#2e2e2e]">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-[#737373]">
             <div>
-                <span class="text-[#e5e5e5] font-bold bg-[#1a1a1a] px-2 py-0.5 border border-[#2e2e2e] text-[#4ade80] mr-2">ZYROX</span> 
-                &copy; 2026 Zyrox Client Engineering. Licensed under GPLv3.
+                <span class="text-[#e5e5e5] font-bold bg-[#1a1a1a] px-2 py-0.5 border border-[#2e2e2e] text-[#4ade80] mr-2">Zyrox :)</span> 
+                
             </div>
             <div class="flex items-center gap-6">
-                <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#4ade80] transition-colors">Discord Invite</a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#4ade80] transition-colors">GitHub Repository</a>
-                <span class="text-[#e5e5e5]">v2.4.1-release</span>
+                <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#4ade80] transition-colors">Discord Soon</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#4ade80] transition-colors">GitHub Repository (soon)</a>
+                <span class="text-[#e5e5e5]"></span>
             </div>
         </div>
     </footer>
