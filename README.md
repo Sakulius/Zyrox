@@ -3,7 +3,7 @@
 # ZYROX
 ### High-Performance Custom Minecraft Client
 
-[Website](https://zyrox-client.vercel.app) &bull; [Discord](https://discord.gg/zyrox) &bull; [GitHub](https://github.com/zyrox/client)
+[Website](https://zyrox-beta.vercel.app) &bull; [Discord](https://discord.gg/zyrox) &bull; [GitHub](https://github.com/zyrox/client)
 
 </div>
 
