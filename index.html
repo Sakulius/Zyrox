@@ -1,282 +1,384 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zyrox – A clean Minecraft launcher</title>
+<meta name="description" content="Zyrox is a clean Minecraft launcher for Windows with a live 3D skin, profiles, mods and modpacks. Made by Saku.">
+<meta name="theme-color" content="#0d110e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect width='8' height='8' rx='1.8' fill='%2357b847'/%3E%3Cpath d='M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z' fill='%230d160c'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #0d110e;
+  --panel: #151a16;
+  --panel-2: #1b211c;
+  --line: #2a312b;
+  --text: #f2f5f2;
+  --soft: #a9b3ab;
+  --accent: #57b847;
+  --accent-hover: #6dcb5c;
+  --on-accent: #0d160c;
+  --radius: 10px;
+  --heading: Bahnschrift, "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  --body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+}
 
-    <title>ZYROX</title>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 var(--body); }
+img, canvas { display: block; max-width: 100%; }
+a { color: inherit; }
+::selection { background: var(--accent); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-    <script src="https://cdn.tailwindcss.com"></script>
+.wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        bgDark: '#0a0a0a',
-                        surfaceDark: '#111111',
-                        surfaceBorder: '#262626',
-                        accentOrange: '#dc772f',
-                        textPrimary: '#ededed',
-                        textMuted: '#737373'
-                    },
-                    fontFamily: {
-                        mono: ['JetBrains Mono', 'monospace'],
-                        sans: ['Inter', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+.nav {
+  position: absolute; inset: 0 0 auto; z-index: 3;
+  display: flex; align-items: center; justify-content: space-between; height: 72px;
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 600 18px var(--heading); letter-spacing: .04em; }
+.brand svg { width: 26px; height: 26px; }
+.nav-links { display: flex; align-items: center; gap: 24px; font-size: 15px; }
+.nav-links a { text-decoration: none; color: var(--soft); transition: color .15s; }
+.nav-links a:hover { color: var(--text); }
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap"
-        rel="stylesheet"
-    >
+.hero { position: relative; min-height: 700px; display: flex; align-items: center; overflow: hidden; isolation: isolate; }
+#landscape { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; object-position: right bottom; image-rendering: pixelated; }
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(13,17,14,.94) 0%, rgba(13,17,14,.82) 42%, rgba(13,17,14,.1) 74%),
+    linear-gradient(180deg, rgba(13,17,14,.45) 0%, transparent 25%, transparent 70%, var(--bg) 100%);
+}
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: center; gap: 32px; padding-block: 112px 72px; }
+.status {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0 0 18px; padding: 5px 12px;
+  border: 1px solid var(--line); border-radius: 99px; background: rgba(13,17,14,.72);
+  color: var(--soft); font-size: 14px;
+}
+.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+h1, h2, h3 { font-family: var(--heading); font-weight: 600; margin: 0; letter-spacing: -.01em; }
+h1 { font-size: clamp(44px, 7vw, 76px); line-height: 1.04; text-wrap: balance; }
+.lead { max-width: 33em; margin: 20px 0 30px; color: #dfe5e0; font-size: clamp(17px, 2vw, 20px); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.button {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px;
+  border-radius: 8px; background: var(--accent); color: var(--on-accent);
+  font: 600 16px var(--body); text-decoration: none; transition: background .15s, transform .15s;
+}
+.button:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.button.ghost { background: rgba(255,255,255,.1); color: var(--text); }
+.button.ghost:hover { background: rgba(255,255,255,.18); }
+.note { margin: 14px 0 0; color: var(--soft); font-size: 14px; }
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+/* Figur aus CSS-Quadern, dreht sich mit dem Zeiger */
+.stage { height: 430px; display: grid; place-items: center; perspective: 1100px; cursor: grab; touch-action: pan-y; }
+.stage:active { cursor: grabbing; }
+.figure { --u: 11px; position: relative; width: calc(var(--u) * 16); height: calc(var(--u) * 32); transform-style: preserve-3d; transform: rotateX(var(--pitch, -4deg)) rotateY(var(--yaw, -22deg)); }
+.part { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); transform-style: preserve-3d; transform-origin: 50% var(--pivot, 50%); }
+.part > i { position: absolute; left: 0; top: 0; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); backface-visibility: hidden; }
+.part > .f, .part > .b { width: 100%; height: 100%; }
+.part > .f { transform: translateZ(calc(var(--d) * var(--u) / 2)); }
+.part > .b { transform: rotateY(180deg) translateZ(calc(var(--d) * var(--u) / 2)); filter: brightness(.68); }
+.part > .l, .part > .r { width: calc(var(--d) * var(--u)); height: 100%; left: calc(50% - var(--d) * var(--u) / 2); }
+.part > .l { transform: rotateY(-90deg) translateZ(calc(var(--w) * var(--u) / 2)); filter: brightness(.76); }
+.part > .r { transform: rotateY(90deg) translateZ(calc(var(--w) * var(--u) / 2)); filter: brightness(.86); }
+.part > .t, .part > .u { width: 100%; height: calc(var(--d) * var(--u)); top: calc(50% - var(--d) * var(--u) / 2); }
+.part > .t { transform: rotateX(90deg) translateZ(calc(var(--h) * var(--u) / 2)); filter: brightness(1.14); }
+.part > .u { transform: rotateX(-90deg) translateZ(calc(var(--h) * var(--u) / 2)); filter: brightness(.55); }
+.head { --x: 4; --y: 0; --w: 8; --h: 8; --d: 8; --c: #6f8f70; z-index: 2; transform: rotateX(var(--look-x, 0deg)) rotateY(var(--look-y, 0deg)); transform-origin: 50% 100%; }
+.face { position: absolute; inset: 0; }
+.face b { position: absolute; background: #0d160c; }
+.face .e1 { left: 18%; top: 38%; width: 16%; height: 16%; }
+.face .e2 { right: 18%; top: 38%; width: 16%; height: 16%; }
+.face .m { left: 26%; top: 66%; width: 48%; height: 11%; }
+.visor { position: absolute; left: 0; right: 0; top: 0; height: 26%; background: var(--accent); }
+.torso { --x: 4; --y: 8; --w: 8; --h: 12; --d: 4; --c: #2c3a30; }
+.mark { position: absolute; left: 31%; top: 18%; width: 38%; aspect-ratio: 1; background: var(--accent); }
+.arm { --y: 8; --w: 4; --h: 12; --d: 4; --c: #6f8f70; --pivot: 8%; }
+.arm-r { --x: 0; animation: wave 5.5s ease-in-out infinite; }
+.arm-l { --x: 12; }
+.leg { --y: 20; --w: 4; --h: 12; --d: 4; --c: #1c251f; }
+.leg-r { --x: 4; }
+.leg-l { --x: 8; }
+@keyframes wave {
+  0%, 62%, 100% { transform: rotateZ(4deg); }
+  70%, 78%, 86%, 94% { transform: rotateZ(146deg); }
+  74%, 82%, 90% { transform: rotateZ(118deg); }
+}
+.shadow { position: absolute; left: 50%; bottom: 8px; width: 300px; height: 44px; translate: -50%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.6), transparent); transform: rotateX(0); pointer-events: none; }
+.stage-wrap { position: relative; }
 
-        body {
-            background: #0a0a0a;
-            color: #ededed;
-            font-family: 'Inter', sans-serif;
-        }
+section { padding-block: 72px; }
+.section-head { max-width: 40em; margin-bottom: 34px; }
+.section-head h2 { font-size: clamp(30px, 4.4vw, 44px); line-height: 1.12; }
+.section-head p { margin: 10px 0 0; color: var(--soft); font-size: 18px; }
 
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
+.showcase { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+.shot { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+.shot img { width: 100%; height: auto; }
+.shot figcaption { padding: 12px 16px; color: var(--soft); font-size: 14px; border-top: 1px solid var(--line); }
+.shot strong { color: var(--text); font-weight: 600; }
+.shot.big { grid-column: span 12; }
+.shot.half { grid-column: span 6; }
 
-        .sharp-card {
-            background: #111111;
-            border: 1px solid #262626;
-            border-radius: 2px;
-            transition: border-color 0.2s ease, background 0.2s ease;
-        }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
+.feature { padding: 26px; background: var(--panel); }
+.feature h3 { font-size: 19px; margin-bottom: 6px; }
+.feature p { margin: 0; color: var(--soft); font-size: 15px; }
 
-        .sharp-card:hover {
-            border-color: #3f3f3f;
-            background: #141414;
-        }
+.changelog { display: grid; grid-template-columns: 170px 1fr; gap: 8px 24px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+.changelog h3 { font-size: 20px; }
+.changelog time { display: block; color: var(--soft); font-size: 14px; margin-top: 2px; }
+.changelog ul { margin: 0; padding-left: 18px; color: var(--soft); }
+.changelog li + li { margin-top: 4px; }
 
-        .download-button {
-            transition:
-                background 0.2s ease,
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
+.beta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 36px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(115deg, #1b2a1c, var(--panel) 62%); }
+.beta h2 { font-size: clamp(28px, 4vw, 38px); }
+.beta p { margin: 8px 0 0; color: var(--soft); max-width: 34em; }
 
-        .download-button:hover {
-            background: #c96624;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 30px rgba(220, 119, 47, 0.12);
-        }
+footer { padding-block: 34px 44px; border-top: 1px solid var(--line); color: var(--soft); font-size: 14px; }
+.footer-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+footer a { color: var(--text); }
+footer p { margin: 12px 0 0; }
 
-        ::selection {
-            background: #dc772f;
-            color: #0a0a0a;
-        }
+@media (max-width: 860px) {
+  .hero { min-height: 0; }
+  .hero::after { background: linear-gradient(180deg, rgba(13,17,14,.72) 0%, rgba(13,17,14,.72) 56%, var(--bg) 100%); }
+  .hero-grid { grid-template-columns: minmax(0, 1fr); padding-block: 104px 32px; gap: 8px; }
+  .stage { height: 340px; }
+  .figure { --u: 8.4px; }
+  .shadow { width: 230px; }
+  .shot.half { grid-column: span 12; }
+  .features { grid-template-columns: repeat(2, 1fr); }
+  section { padding-block: 52px; }
+}
 
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
+@media (max-width: 560px) {
+  .nav-links a:not(.keep) { display: none; }
+  .features { grid-template-columns: minmax(0, 1fr); }
+  .changelog { grid-template-columns: minmax(0, 1fr); }
+  .beta { padding: 26px; }
+  .button { width: 100%; }
+}
 
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #292929;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #dc772f;
-        }
-    </style>
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .arm-r { animation: none; }
+  .button { transition: none; }
+}
+</style>
 </head>
+<body>
 
-<body class="bg-[#0a0a0a] text-[#ededed] min-h-screen flex flex-col">
+<header class="hero">
+  <canvas id="landscape" width="480" height="270" aria-hidden="true"></canvas>
+  <nav class="nav wrap" aria-label="Main">
+    <a class="brand" href="#top" id="top">
+      <svg viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" rx="1.8" fill="#57b847"/><path d="M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z" fill="#0d160c"/></svg>
+      ZYROX
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#changelog">Changelog</a>
+      <a class="keep" href="https://discord.gg/ZyroxBeta" target="_blank" rel="noopener noreferrer">Discord</a>
+    </div>
+  </nav>
 
-    <header class="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur border-b border-[#262626]">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            
-            <div class="flex items-center">
-                <span class="w-1.5 h-1.5 bg-[#b82828] rounded-full mr-2"></span>
-
-                <span class="text-[10px] font-mono uppercase tracking-widest text-[#555555]">
-                    Offline
-                </span>
-            </div>
-
+  <div class="hero-grid wrap">
+    <div>
+      <p class="status"><i aria-hidden="true"></i> Closed beta · Windows</p>
+      <h1>Minecraft, without the clutter.</h1>
+      <p class="lead">Zyrox is a clean launcher built around you: your skin in live 3D, your profiles and your mods, ready in one click.</p>
+      <div class="actions">
+        <a class="button" href="https://discord.gg/ZyroxBeta" target="_blank" rel="noopener noreferrer">Join the beta on Discord</a>
+        <a class="button ghost" href="#features">See what it does</a>
+      </div>
+      <p class="note">No cheats. Sign in with your own Microsoft account.</p>
+    </div>
+    <div class="stage-wrap">
+      <div class="stage" id="stage" aria-hidden="true">
+        <div class="figure" id="figure">
+          <div class="part leg leg-r"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
+          <div class="part leg leg-l"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
+          <div class="part torso"><i class="f"><span class="mark"></span></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
+          <div class="part arm arm-r"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
+          <div class="part arm arm-l"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
+          <div class="part head"><i class="f"><span class="visor"></span><span class="face"><b class="e1"></b><b class="e2"></b><b class="m"></b></span></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
         </div>
-    </header>
+      </div>
+      <div class="shadow" aria-hidden="true"></div>
+    </div>
+  </div>
+</header>
 
+<main>
+  <section class="wrap" id="features">
+    <div class="section-head">
+      <h2>Everything in one calm place</h2>
+      <p>Mods, skins, worlds and servers each get their own page, so nothing gets in the way of playing.</p>
+    </div>
 
-    <section class="relative pt-24 pb-24 px-6 border-b border-[#262626] overflow-hidden">
+    <div class="showcase">
+      <figure class="shot big">
+        <img src="assets/skins.png" width="1180" height="720" alt="The Zyrox skins page with a purple skin shown as a 3D model next to the skin collection." loading="lazy">
+        <figcaption><strong>Skins.</strong> Keep a collection, preview in 3D and apply a skin to your account.</figcaption>
+      </figure>
+      <figure class="shot half">
+        <img src="assets/profiles.png" width="1180" height="720" alt="The Zyrox profiles page listing Vanilla, Fabric and NeoForge profiles." loading="lazy">
+        <figcaption><strong>Profiles.</strong> Separate worlds and mods for every setup. Names shown are examples.</figcaption>
+      </figure>
+      <figure class="shot half">
+        <img src="assets/stats.png" width="1180" height="720" alt="The Zyrox statistics page with total playtime and a bar chart of the last seven days." loading="lazy">
+        <figcaption><strong>Statistics.</strong> See where your time goes. Shown with sample data.</figcaption>
+      </figure>
+    </div>
+  </section>
 
-        <div class="relative max-w-7xl mx-auto">
+  <section class="wrap" aria-labelledby="more-title">
+    <div class="section-head">
+      <h2 id="more-title">Built for how you actually play</h2>
+    </div>
+    <div class="features">
+      <article class="feature"><h3>A skin that feels alive</h3><p>Your avatar follows your cursor, waves hello, cheers when the game is ready and sits down when you step away.</p></article>
+      <article class="feature"><h3>Mods in one click</h3><p>Search Modrinth from inside Zyrox for mods, modpacks, resource packs and shaders. Update your mods all at once.</p></article>
+      <article class="feature"><h3>Fabric, Forge, NeoForge</h3><p>Pick a loader when you create a profile. Your normal game stays untouched.</p></article>
+      <article class="feature"><h3>Servers at a glance</h3><p>See who is online and your ping, pin your favorites to the start page and join in one click.</p></article>
+      <article class="feature"><h3>Worlds under control</h3><p>All your worlds across every profile. Back them up or jump straight in.</p></article>
+      <article class="feature"><h3>Several accounts</h3><p>Switch between your Microsoft accounts without signing in again.</p></article>
+      <article class="feature"><h3>Share a setup</h3><p>Export a profile with its mods as one file and send it to a friend. Your worlds stay private.</p></article>
+      <article class="feature"><h3>Your colors</h3><p>Seven color themes, or let Zyrox change with the time of day. Use your own screenshots as the background.</p></article>
+      <article class="feature"><h3>Updates built in</h3><p>When a new version is out, Zyrox offers it on the start page and installs it with one click.</p></article>
+    </div>
+  </section>
 
-            <div class="max-w-4xl">
+  <section class="wrap" id="changelog">
+    <div class="section-head">
+      <h2>Changelog</h2>
+    </div>
+    <article class="changelog">
+      <div>
+        <h3>2.1.1</h3>
+        <time datetime="2026-11-04">November 4, 2026</time>
+      </div>
+      <ul>
+        <li>Updates can now be found and installed right inside Zyrox.</li>
+        <li>Leftover temporary files are cleaned up after failed downloads.</li>
+      </ul>
+    </article>
+  </section>
 
-                <h1 class="text-6xl sm:text-7xl lg:text-8xl font-mono font-bold uppercase tracking-[-0.06em] text-[#ededed] leading-none">
-                    ZYROX
-                </h1>
+  <section class="wrap" id="beta" style="padding-top:0">
+    <div class="beta">
+      <div>
+        <h2>Want in?</h2>
+        <p>Zyrox is in closed beta. Join the Discord to get access.</p>
+      </div>
+      <a class="button" href="https://discord.gg/ZyroxBeta" target="_blank" rel="noopener noreferrer">Join on Discord</a>
+    </div>
+  </section>
+</main>
 
-                <div class="flex items-center gap-4 pt-8">
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <span>Zyrox by Saku</span>
+      <a href="https://discord.gg/ZyroxBeta" target="_blank" rel="noopener noreferrer">Discord</a>
+    </div>
+    <p>Zyrox is an independent project and is not affiliated with or endorsed by Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Synergies AB. You need your own copy of Minecraft: Java Edition.</p>
+  </div>
+</footer>
 
-                    <a
-                        href="download.html"
-                        class="download-button px-7 py-3.5 bg-[#dc772f] text-[#0a0a0a] font-mono font-bold text-sm rounded-none flex items-center gap-3"
-                    >
-                        <span>Download</span>
-                        <span class="text-[#5a280f]">→</span>
-                    </a>
+<script>
+(function () {
+  var canvas = document.getElementById('landscape');
+  var ctx = canvas.getContext('2d');
+  var S = 6, COLS = 80, ROWS = 45;
+  var seed = 41;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  function block(col, row, c, noise) {
+    if (col < 0 || col >= COLS || row < 0 || row >= ROWS) return;
+    for (var y = 0; y < S; y += 2) for (var x = 0; x < S; x += 2) {
+      var n = noise ? Math.round((rnd() * 2 - 1) * noise) : 0;
+      ctx.fillStyle = 'rgb(' + (c[0] + n) + ',' + (c[1] + n) + ',' + (c[2] + n) + ')';
+      ctx.fillRect(col * S + x, row * S + y, 2, 2);
+    }
+  }
+  var r, c;
+  for (r = 0; r < ROWS; r++) {
+    var t = r / (ROWS - 1);
+    for (c = 0; c < COLS; c++) block(c, r, [38 + 214 * t | 0, 52 + 110 * t | 0, 112 + 10 * t | 0], 0);
+  }
+  for (r = 13; r < 19; r++) for (c = 56; c < 62; c++) block(c, r, [255, 214, 130], 3);
+  [[8, 6, 10], [64, 5, 12], [44, 9, 7]].forEach(function (m) {
+    for (c = m[0]; c < m[0] + m[2]; c++) block(c, m[1], [232, 190, 196], 2);
+    for (c = m[0] + 2; c < m[0] + m[2] - 2; c++) block(c, m[1] - 1, [244, 214, 214], 2);
+  });
+  function fillFrom(fn, color, noise) {
+    for (var col = 0; col < COLS; col++) for (var row = fn(col) | 0; row < ROWS; row++) block(col, row, color, noise);
+  }
+  fillFrom(function (x) { return 25 + 4 * Math.sin(x * .21) + 2 * Math.sin(x * .07 + 1.3); }, [66, 62, 112], 2);
+  fillFrom(function (x) { return 31 + 3 * Math.sin(x * .13 + 2) + 1.5 * Math.sin(x * .31); }, [38, 66, 74], 2);
+  var ground = [];
+  for (c = 0; c < COLS; c++) {
+    var top = (37 + 2.5 * Math.sin(c * .17 + .4) + 1.2 * Math.sin(c * .41)) | 0;
+    ground[c] = top;
+    for (r = top; r < ROWS; r++) {
+      var depth = r - top;
+      block(c, r, depth === 0 ? [82, 150, 62] : depth < 3 ? [112, 76, 50] : [88, 88, 92], depth === 0 ? 10 : 7);
+    }
+  }
+  [34, 47, 52, 66, 73].forEach(function (col) {
+    var base = ground[col], trunk = 4 + col % 2;
+    for (r = base - trunk; r < base; r++) block(col, r, [84, 58, 40], 6);
+    for (var dy = -trunk - 2; dy <= -trunk + 1; dy++) {
+      var rad = dy <= -trunk - 1 ? 1 : 2;
+      for (var dx = -rad; dx <= rad; dx++) block(col + dx, base + dy, [42, 104, 56], 9);
+    }
+  });
 
-                </div>
+  var stage = document.getElementById('stage');
+  var figure = document.getElementById('figure');
+  var head = figure.querySelector('.head');
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var yaw = -22, pitch = -4, targetLookX = 0, targetLookY = 0, lookX = 0, lookY = 0;
+  var dragging = false, lastX = 0, lastY = 0, baseYaw = -22;
 
-            </div>
-
-        </div>
-    </section>
-
-
-    <section id="changelog" class="py-24 px-6 border-b border-[#262626]">
-
-            <div class="mb-5">
-                
-                <h2 class="text-3xl sm:text-4xl font-mono font-bold uppercase tracking-tight text-[#ededed] mt-5">
-                    Changelog
-                </h2>
-
-            </div>
-
-            <div class="max-w-4xl">
-
-                <div class="sharp-card p-6 sm:p-7">
-
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-5 mb-5 border-b border-[#262626]">
-
-                        <span class="text-[#dc772f] font-mono text-xs font-bold uppercase tracking-wider">
-                            Join the discord to join the closed beta
-                        </span>
-
-                        <span class="text-[#555555] font-mono text-[10px] uppercase tracking-widest">
-                            September 12, 2026
-                        </span>
-
-                    </div>
-
-                    <ul class="space-y-3 font-mono text-xs text-[#737373]">
-
-                        <li class="flex gap-3">
-                            <span class="text-[#dc772f]">+</span>
-
-                            <span>
-                                <a
-                                    href="https://discord.gg/ZyroxBeta"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="hover:text-[#dc772f] transition-colors"
-                                >
-                                    Discord &lt;--
-                                </a>
-                            </span>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-
-    <footer class="bg-[#0a0a0a] py-10 px-6 font-mono text-xs">
-
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-[#555555]">
-
-            <div class="flex items-center">
-
-                <span class="text-[#dc772f] font-bold bg-[#111111] px-2 py-1 border border-[#262626] mr-3">
-                    Zyrox By Saku ❤️
-                </span>
-
-            </div>
-
-            <div class="flex items-center gap-4 flex-wrap justify-center">
-
-                <a
-                    href="https://discord.gg/ZyroxBeta"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hover:text-[#dc772f] transition-colors"
-                >
-                    Discord
-                </a>
-
-                <!-- Got This from uiverse.io (https://uiverse.io/elijahgummer/bright-chicken-11)-->
-                <a
-                    href="https://github.com/Sakulius/Zyrox"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex overflow-hidden items-center text-sm font-medium bg-black text-white shadow hover:bg-black/90 h-9 px-4 py-2 max-w-52 whitespace-pre group relative w-full justify-center gap-2 rounded-md transition-all duration-300 ease-out hover:ring-2 hover:ring-[#dc772f] hover:ring-offset-2 hover:ring-offset-[#0a0a0a]"
-                >
-
-                    <span
-                        class="absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 bg-white opacity-10 transition-all duration-1000 ease-out group-hover:-translate-x-40"
-                    ></span>
-
-                    <div class="flex items-center">
-
-                        
-                        <svg
-                            class="w-4 h-4 fill-current"
-                            viewBox="0 0 438.549 438.549"
-                            aria-hidden="true"
-                        >
-                            <path
-                                d="M409.132 114.573c-19.608-33.596-46.205-60.194-79.798-79.8-33.598-19.607-70.277-29.408-110.063-29.408-39.781 0-76.472 9.804-110.063 29.408-33.596 19.605-60.192 46.204-79.8 79.8C9.803 148.168 0 184.854 0 224.63c0 47.78 13.94 90.745 41.827 128.906 27.884 38.164 63.906 64.572 108.063 79.227 5.14.954 8.945.283 11.419-1.996 2.475-2.282 3.711-5.14 3.711-8.562 0-.571-.049-5.708-.144-15.417a2549.81 2549.81 0 01-.144-25.406l-6.567 1.136c-4.187.767-9.469 1.092-15.846 1-6.374-.089-12.991-.757-19.842-1.999-6.854-1.231-13.229-4.086-19.13-8.559-5.898-4.473-10.085-10.328-12.56-17.556l-2.855-6.57c-1.903-4.374-4.899-9.233-8.992-14.559-4.093-5.331-8.232-8.945-12.419-10.848l-1.999-1.431c-1.332-.951-2.568-2.098-3.711-3.429-1.142-1.331-1.997-2.663-2.568-3.997-.572-1.335-.098-2.43 1.427-3.289 1.525-.859 4.281-1.276 8.28-1.276l5.708.853c3.807.763 8.516 3.042 14.133 6.851 5.614 3.806 10.229 8.754 13.846 14.842 4.38 7.806 9.657 13.754 15.846 17.847 6.184 4.093 12.419 6.136 18.699 6.136 6.28 0 11.704-.476 16.274-1.423 4.565-.952 8.848-2.383 12.847-4.285 1.713-12.758 6.377-22.559 13.988-29.41-10.848-1.14-20.601-2.857-29.264-5.14-8.658-2.286-17.605-5.996-26.835-11.14-9.235-5.137-16.896-11.516-22.985-19.126-6.09-7.614-11.088-17.61-14.987-29.979-3.901-12.374-5.852-26.648-5.852-42.826 0-23.035 7.52-42.637 22.557-58.817-7.044-17.318-6.379-36.732 1.997-58.24 5.52-1.715 13.706-.428 24.554 3.853 10.85 4.283 18.794 7.952 23.84 10.994 5.046 3.041 9.089 5.618 12.135 7.708 17.705-4.947 35.976-7.421 54.818-7.421s37.117 2.474 54.823 7.421l10.849-6.849c7.419-4.57 16.18-8.758 26.262-12.565 10.088-3.805 17.802-4.853 23.134-3.138 8.562 21.509 9.325 40.922 2.279 58.24 15.036 16.18 22.559 35.787 22.559 58.817 0 16.178-1.958 30.497-5.853 42.966-3.9 12.471-8.941 22.457-15.125 29.979-6.191 7.521-13.901 13.85-23.131 18.986-9.232 5.14-18.182 8.85-26.84 11.136-8.662 2.286-18.415 4.004-29.263 5.146 9.894 8.562 14.842 22.077 14.842 40.539v60.237c0 3.422 1.19 6.279 3.572 8.562 2.379 2.279 6.136 2.95 11.276 1.995 44.163-14.653 80.185-41.062 108.068-79.226 27.88-38.161 41.825-81.126 41.825-128.906-.01-39.771-9.818-76.454-29.414-110.049z"
-                            />
-                        </svg>
-
-                        <span class="ml-1 text-white">
-                            Star on GitHub
-                        </span>
-
-                    </div>
-
-                    <div class="ml-2 flex items-center gap-1 text-sm">
-
-                        <svg
-                            class="w-4 h-4 text-gray-500 transition-all duration-300 group-hover:text-yellow-300"
-                            aria-hidden="true"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                clip-rule="evenodd"
-                                d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                                fill-rule="evenodd"
-                            />
-                        </svg>
-
-                        <span class="inline-block tabular-nums tracking-wider font-medium text-white">
-                            6
-                        </span>
-
-                    </div>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </footer>
-
+  function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+  function apply() {
+    figure.style.setProperty('--yaw', yaw + 'deg');
+    figure.style.setProperty('--pitch', pitch + 'deg');
+    head.style.setProperty('--look-x', lookX + 'deg');
+    head.style.setProperty('--look-y', lookY + 'deg');
+  }
+  stage.addEventListener('pointerdown', function (e) { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.setPointerCapture(e.pointerId); });
+  stage.addEventListener('pointerup', function () { dragging = false; baseYaw = yaw; });
+  stage.addEventListener('pointercancel', function () { dragging = false; baseYaw = yaw; });
+  window.addEventListener('pointermove', function (e) {
+    if (dragging) {
+      yaw += (e.clientX - lastX) * .6;
+      pitch = clamp(pitch - (e.clientY - lastY) * .3, -28, 28);
+      lastX = e.clientX; lastY = e.clientY;
+      if (calm) apply();
+      return;
+    }
+    var box = figure.getBoundingClientRect();
+    targetLookY = clamp((e.clientX - (box.left + box.width / 2)) * .05, -32, 32);
+    targetLookX = clamp(-(e.clientY - (box.top + box.height * .13)) * .05, -18, 18);
+    if (calm) { lookX = targetLookX; lookY = targetLookY; apply(); }
+  });
+  apply();
+  if (calm) return;
+  var start = performance.now();
+  (function frame(now) {
+    if (!dragging) yaw = baseYaw + Math.sin((now - start) / 2400) * 9;
+    lookX += (targetLookX - lookX) * .08;
+    lookY += (targetLookY - lookY) * .08;
+    apply();
+    requestAnimationFrame(frame);
+  })(start);
+})();
+</script>
 </body>
 </html>
