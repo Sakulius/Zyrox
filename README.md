@@ -3,7 +3,7 @@
 # ZYROX
 ### A Client Made by Saku
 
-[Website](https://zyrox-beta.vercel.app) &bull; [Discord](https://discord.gg/zyroxbeta)
+[Website]() &bull; [Discord (Soon)]()
 
 </div>
 
