@@ -12,3 +12,5 @@
 ## Overview
 
 This is not a cheat client!
+
+Yeah its made with claude
