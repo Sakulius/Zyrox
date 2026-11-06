@@ -1,13 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zyrox – A clean Minecraft launcher</title>
-<meta name="description" content="Zyrox is a clean Minecraft launcher for Windows with a live 3D skin, profiles, mods and modpacks. Made by Saku.">
+<title>Zyrox – Minecraft launcher and client</title>
+<meta name="description" content="Zyrox is a free, clean Minecraft launcher for Windows with its own in-game client: profiles, mods, skins, HUD and cosmetics. Made by Saku.">
 <meta name="theme-color" content="#0d110e">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect width='8' height='8' rx='1.8' fill='%2357b847'/%3E%3Cpath d='M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z' fill='%230d160c'/%3E%3C/svg%3E">
 <style>
+@font-face { font-family: Inter; font-weight: 400; font-display: swap; src: url("assets/fonts/inter-regular.ttf") format("truetype"); }
+@font-face { font-family: Inter; font-weight: 600; font-display: swap; src: url("assets/fonts/inter-semibold.ttf") format("truetype"); }
 :root {
   --bg: #0d110e;
   --panel: #151a16;
@@ -19,8 +21,8 @@
   --accent-hover: #6dcb5c;
   --on-accent: #0d160c;
   --radius: 10px;
-  --heading: Bahnschrift, "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
-  --body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  --heading: Inter, system-ui, -apple-system, sans-serif;
+  --body: Inter, system-ui, -apple-system, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -120,14 +122,16 @@ section { padding-block: 72px; }
 .shot img { width: 100%; height: auto; }
 .shot figcaption { padding: 12px 16px; color: var(--soft); font-size: 14px; border-top: 1px solid var(--line); }
 .shot strong { color: var(--text); font-weight: 600; }
-.shot.big { grid-column: span 12; }
 .shot.half { grid-column: span 6; }
+
+.shots-note { margin: 12px 0 0; color: var(--soft); font-size: 14px; }
 
 .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
 .feature { padding: 26px; background: var(--panel); }
 .feature h3 { font-size: 19px; margin-bottom: 6px; }
 .feature p { margin: 0; color: var(--soft); font-size: 15px; }
 
+.changelog + .changelog { margin-top: 12px; }
 .changelog { display: grid; grid-template-columns: 170px 1fr; gap: 8px 24px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
 .changelog h3 { font-size: 20px; }
 .changelog time { display: block; color: var(--soft); font-size: 14px; margin-top: 2px; }
@@ -137,6 +141,11 @@ section { padding-block: 72px; }
 .beta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 36px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(115deg, #1b2a1c, var(--panel) 62%); }
 .beta h2 { font-size: clamp(28px, 4vw, 38px); }
 .beta p { margin: 8px 0 0; color: var(--soft); max-width: 34em; }
+
+.more { margin: 16px 0 0; font-size: 15px; }
+.more a { color: var(--text); }
+#download { padding-top: 0; }
+.beta .fine { font-size: 14px; }
 
 footer { padding-block: 34px 44px; border-top: 1px solid var(--line); color: var(--soft); font-size: 14px; }
 .footer-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
@@ -182,20 +191,20 @@ footer p { margin: 12px 0 0; }
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#changelog">Changelog</a>
-      <a class="keep" href="https://discord.gg/ZyroxBeta" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a class="keep" href="#download">Download</a>
     </div>
   </nav>
 
   <div class="hero-grid wrap">
     <div>
-      <p class="status"><i aria-hidden="true"></i> Closed beta · Windows</p>
+      <p class="status"><i aria-hidden="true"></i> Windows · Version <span class="version">3.2.0</span></p>
       <h1>Minecraft, without the clutter.</h1>
-      <p class="lead">Zyrox is a clean launcher built around you: your skin in live 3D, your profiles and your mods, ready in one click.</p>
+      <p class="lead">A clean launcher with its own in-game client. Pick a profile and press Play.</p>
       <div class="actions">
-        <a class="button" href="https://discord.gg/ZyroxBeta" target="_blank" rel="noopener noreferrer">Join the beta on Discord</a>
-        <a class="button ghost" href="#features">See what it does</a>
+        <a class="button dl" href="https://github.com/Sakulius/Zyrox/releases/latest">Download for Windows</a>
+        <a class="button ghost" href="#features">See features</a>
       </div>
-      <p class="note">No cheats. Sign in with your own Microsoft account.</p>
+      <p class="note">Free. No cheats. No admin rights needed.</p>
     </div>
     <div class="stage-wrap">
       <div class="stage" id="stage" aria-hidden="true">
@@ -216,12 +225,22 @@ footer p { margin: 12px 0 0; }
 <main>
   <section class="wrap" id="features">
     <div class="section-head">
-      <h2>Everything in one calm place</h2>
-      <p>Mods, skins, worlds and servers each get their own page, so nothing gets in the way of playing.</p>
+      <h2>Everything you need, nothing you don't</h2>
     </div>
 
+    <div class="features">
+      <article class="feature"><h3>One click to play</h3><p>Home is just your character, a profile picker and Play.</p></article>
+      <article class="feature"><h3>A profile for every setup</h3><p>Each one has its own mods, worlds, servers, gallery and settings. Share a setup as a single file.</p></article>
+      <article class="feature"><h3>Mods from Modrinth</h3><p>Find mods, modpacks, resource packs and shaders inside Zyrox. Works with Fabric, Forge and NeoForge.</p></article>
+      <article class="feature"><h3>Zyrox Client included</h3><p>A resizable HUD, zoom and auto sprint in game, on Minecraft 26.3. Press Right Shift to open the menu.</p></article>
+      <article class="feature"><h3>Cosmetics</h3><p>Capes, hats, body items and auras. Other Zyrox players see them too.</p></article>
+      <article class="feature"><h3>Music and lyrics</h3><p>See what's playing and follow the lyrics while you play.</p></article>
+    </div>
+  </section>
+
+  <section class="wrap" aria-label="Screenshots" style="padding-top:0">
     <div class="showcase">
-      <figure class="shot big">
+      <figure class="shot half">
         <img src="assets/skins.png" width="1180" height="720" alt="The Zyrox skins page with a purple skin shown as a 3D model next to the skin collection." loading="lazy">
         <figcaption><strong>Skins.</strong> Keep a collection, preview in 3D and apply a skin to your account.</figcaption>
       </figure>
@@ -229,53 +248,58 @@ footer p { margin: 12px 0 0; }
         <img src="assets/profiles.png" width="1180" height="720" alt="The Zyrox profiles page listing Vanilla, Fabric and NeoForge profiles." loading="lazy">
         <figcaption><strong>Profiles.</strong> Separate worlds and mods for every setup. Names shown are examples.</figcaption>
       </figure>
-      <figure class="shot half">
-        <img src="assets/stats.png" width="1180" height="720" alt="The Zyrox statistics page with total playtime and a bar chart of the last seven days." loading="lazy">
-        <figcaption><strong>Statistics.</strong> See where your time goes. Shown with sample data.</figcaption>
-      </figure>
     </div>
+    <p class="shots-note">Screenshots are from an earlier version. The current launcher looks different.</p>
   </section>
 
-  <section class="wrap" aria-labelledby="more-title">
-    <div class="section-head">
-      <h2 id="more-title">Built for how you actually play</h2>
-    </div>
-    <div class="features">
-      <article class="feature"><h3>A skin that feels alive</h3><p>Your avatar follows your cursor, waves hello, cheers when the game is ready and sits down when you step away.</p></article>
-      <article class="feature"><h3>Mods in one click</h3><p>Search Modrinth from inside Zyrox for mods, modpacks, resource packs and shaders. Update your mods all at once.</p></article>
-      <article class="feature"><h3>Fabric, Forge, NeoForge</h3><p>Pick a loader when you create a profile. Your normal game stays untouched.</p></article>
-      <article class="feature"><h3>Servers at a glance</h3><p>See who is online and your ping, pin your favorites to the start page and join in one click.</p></article>
-      <article class="feature"><h3>Worlds under control</h3><p>All your worlds across every profile. Back them up or jump straight in.</p></article>
-      <article class="feature"><h3>Several accounts</h3><p>Switch between your Microsoft accounts without signing in again.</p></article>
-      <article class="feature"><h3>Share a setup</h3><p>Export a profile with its mods as one file and send it to a friend. Your worlds stay private.</p></article>
-      <article class="feature"><h3>Your colors</h3><p>Seven color themes, or let Zyrox change with the time of day. Use your own screenshots as the background.</p></article>
-      <article class="feature"><h3>Updates built in</h3><p>When a new version is out, Zyrox offers it on the start page and installs it with one click.</p></article>
-    </div>
-  </section>
-
-  <section class="wrap" id="changelog">
+  <section class="wrap" id="changelog" style="padding-top:0">
     <div class="section-head">
       <h2>Changelog</h2>
     </div>
     <article class="changelog">
       <div>
-        <h3>2.1.1</h3>
-        <time datetime="2026-11-04">November 4, 2026</time>
+        <h3>3.2.0</h3>
+        <time datetime="2026-11-06">November 6, 2026</time>
       </div>
       <ul>
-        <li>Updates can now be found and installed right inside Zyrox.</li>
-        <li>Leftover temporary files are cleaned up after failed downloads.</li>
+        <li>New cosmetics menu with Capes, Hats, Body and Auras tabs.</li>
+        <li>Every item shows a preview, auras show their particle.</li>
+        <li>New hats: Rainbow Hat and Party Hat.</li>
       </ul>
     </article>
+    <article class="changelog">
+      <div>
+        <h3>3.1.0</h3>
+        <time datetime="2026-11-06">November 6, 2026</time>
+      </div>
+      <ul>
+        <li>New 3D cosmetics: Cowboy Hat, Straw Hat, Hay Bale and Life Buoy.</li>
+        <li>Other Zyrox players see them too.</li>
+      </ul>
+    </article>
+    <article class="changelog">
+      <div>
+        <h3>3.0.0</h3>
+        <time datetime="2026-11-06">November 6, 2026</time>
+      </div>
+      <ul>
+        <li>New look that matches the in-game client, with a simpler Home.</li>
+        <li>Mods, worlds, servers, gallery and settings now open per profile.</li>
+        <li>HUD elements can be resized from 50 to 200 %.</li>
+        <li>Statistics and news are gone.</li>
+      </ul>
+    </article>
+    <p class="more"><a href="https://github.com/Sakulius/Zyrox/releases">All releases on GitHub</a></p>
   </section>
 
-  <section class="wrap" id="beta" style="padding-top:0">
+  <section class="wrap" id="download">
     <div class="beta">
       <div>
-        <h2>Want in?</h2>
-        <p>Zyrox is in closed beta. Join the Discord to get access.</p>
+        <h2>Get Zyrox</h2>
+        <p>Run the installer, sign in with your Microsoft account and press Play. Zyrox offers new versions by itself.</p>
+        <p class="fine">Needs Windows 10 or newer. The installer is not signed, so Windows may show a SmartScreen warning: click "More info", then "Run anyway".</p>
       </div>
-      <a class="button" href="https://discord.gg/ZyroxBeta" target="_blank" rel="noopener noreferrer">Join on Discord</a>
+      <a class="button dl" href="https://github.com/Sakulius/Zyrox/releases/latest">Download for Windows</a>
     </div>
   </section>
 </main>
@@ -284,13 +308,21 @@ footer p { margin: 12px 0 0; }
   <div class="wrap">
     <div class="footer-row">
       <span>Zyrox by Saku</span>
-      <a href="https://discord.gg/ZyroxBeta" target="_blank" rel="noopener noreferrer">Discord</a>
     </div>
     <p>Zyrox is an independent project and is not affiliated with or endorsed by Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Synergies AB. You need your own copy of Minecraft: Java Edition.</p>
   </div>
 </footer>
 
 <script>
+fetch('https://api.github.com/repos/Sakulius/Zyrox/releases/latest')
+  .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+  .then(function (release) {
+    var setup = release.assets.filter(function (a) { return /^Zyrox-Setup-.*\.exe$/.test(a.name); })[0];
+    if (setup) document.querySelectorAll('.dl').forEach(function (a) { a.href = setup.browser_download_url; });
+    document.querySelectorAll('.version').forEach(function (v) { v.textContent = release.tag_name.replace(/^v/, ''); });
+  })
+  .catch(function () {});
+
 (function () {
   var canvas = document.getElementById('landscape');
   var ctx = canvas.getContext('2d');
@@ -310,7 +342,7 @@ footer p { margin: 12px 0 0; }
     var t = r / (ROWS - 1);
     for (c = 0; c < COLS; c++) block(c, r, [38 + 214 * t | 0, 52 + 110 * t | 0, 112 + 10 * t | 0], 0);
   }
-  for (r = 13; r < 19; r++) for (c = 56; c < 62; c++) block(c, r, [255, 214, 130], 3);
+  for (r = 15; r < 21; r++) for (c = 68; c < 74; c++) block(c, r, [255, 214, 130], 3);
   [[8, 6, 10], [64, 5, 12], [44, 9, 7]].forEach(function (m) {
     for (c = m[0]; c < m[0] + m[2]; c++) block(c, m[1], [232, 190, 196], 2);
     for (c = m[0] + 2; c < m[0] + m[2] - 2; c++) block(c, m[1] - 1, [244, 214, 214], 2);
