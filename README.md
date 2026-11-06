@@ -13,4 +13,4 @@
 
 This is not a cheat client!
 
-Yeah its made with claude
+Yeah its made with alot of help with claude
