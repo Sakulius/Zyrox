@@ -4,312 +4,254 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zyrox – Minecraft launcher and client</title>
-<meta name="description" content="Zyrox is a free, clean Minecraft launcher for Windows with its own in-game client: profiles, mods, skins, HUD and cosmetics. Made by Saku.">
-<meta name="theme-color" content="#0d110e">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect width='8' height='8' rx='1.8' fill='%2357b847'/%3E%3Cpath d='M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z' fill='%230d160c'/%3E%3C/svg%3E">
+<meta name="description" content="Zyrox is a free, clean Minecraft launcher for Windows with its own in-game client: profiles, mods, HUD, friends and cosmetics. Made by Saku.">
+<meta name="theme-color" content="#101116">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect width='8' height='8' rx='1.8' fill='%2357b847'/%3E%3Cpath d='M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z' fill='%23101116'/%3E%3C/svg%3E">
 <style>
 @font-face { font-family: Inter; font-weight: 400; font-display: swap; src: url("assets/fonts/inter-regular.ttf") format("truetype"); }
 @font-face { font-family: Inter; font-weight: 600; font-display: swap; src: url("assets/fonts/inter-semibold.ttf") format("truetype"); }
 :root {
-  --bg: #0d110e;
-  --panel: #151a16;
-  --panel-2: #1b211c;
-  --line: #2a312b;
-  --text: #f2f5f2;
-  --soft: #a9b3ab;
+  --bg: #101116;
+  --card: rgba(16, 17, 22, .72);
+  --border: rgba(255, 255, 255, .12);
+  --border-strong: rgba(255, 255, 255, .2);
+  --text: #ffffff;
+  --soft: #b4b8c0;
+  --muted: #8d929c;
   --accent: #57b847;
-  --accent-hover: #6dcb5c;
-  --on-accent: #0d160c;
-  --radius: 10px;
-  --heading: Inter, system-ui, -apple-system, sans-serif;
-  --body: Inter, system-ui, -apple-system, sans-serif;
+  --radius: 14px;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 var(--body); }
-img, canvas { display: block; max-width: 100%; }
-a { color: inherit; }
-::selection { background: var(--accent); color: var(--on-accent); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-
-.wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
-
-.nav {
-  position: absolute; inset: 0 0 auto; z-index: 3;
-  display: flex; align-items: center; justify-content: space-between; height: 72px;
-}
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 600 18px var(--heading); letter-spacing: .04em; }
-.brand svg { width: 26px; height: 26px; }
-.nav-links { display: flex; align-items: center; gap: 24px; font-size: 15px; }
-.nav-links a { text-decoration: none; color: var(--soft); transition: color .15s; }
-.nav-links a:hover { color: var(--text); }
-
-.hero { position: relative; min-height: 700px; display: flex; align-items: center; overflow: hidden; isolation: isolate; }
-#landscape { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; object-fit: cover; object-position: right bottom; image-rendering: pixelated; }
-.hero::after {
-  content: ""; position: absolute; inset: 0; z-index: -1;
+body {
+  margin: 0; min-height: 100vh; color: var(--text); font: 16px/1.6 Inter, system-ui, sans-serif;
   background:
-    linear-gradient(90deg, rgba(13,17,14,.94) 0%, rgba(13,17,14,.82) 42%, rgba(13,17,14,.1) 74%),
-    linear-gradient(180deg, rgba(13,17,14,.45) 0%, transparent 25%, transparent 70%, var(--bg) 100%);
+    radial-gradient(900px 520px at 85% -10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    radial-gradient(700px 480px at -10% 40%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
+    var(--bg);
+  background-attachment: fixed;
 }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: center; gap: 32px; padding-block: 112px 72px; }
-.status {
-  display: inline-flex; align-items: center; gap: 8px; margin: 0 0 18px; padding: 5px 12px;
-  border: 1px solid var(--line); border-radius: 99px; background: rgba(13,17,14,.72);
+a { color: inherit; }
+::selection { background: var(--accent); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+.wrap { width: min(1040px, 100% - 32px); margin-inline: auto; }
+
+.glass {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--card); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+
+nav { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 18px; letter-spacing: .06em; }
+.brand svg { width: 28px; height: 28px; }
+.brand rect { fill: var(--accent); transition: fill .3s; }
+.links { display: flex; gap: 22px; font-size: 15px; }
+.links a { color: var(--soft); text-decoration: none; transition: color .15s; }
+.links a:hover { color: var(--text); }
+
+.hero { padding-block: 72px 88px; text-align: center; }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0 0 22px; padding: 5px 14px;
+  border: 1px solid var(--border); border-radius: 99px; background: var(--card);
   color: var(--soft); font-size: 14px;
 }
-.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-h1, h2, h3 { font-family: var(--heading); font-weight: 600; margin: 0; letter-spacing: -.01em; }
-h1 { font-size: clamp(44px, 7vw, 76px); line-height: 1.04; text-wrap: balance; }
-.lead { max-width: 33em; margin: 20px 0 30px; color: #dfe5e0; font-size: clamp(17px, 2vw, 20px); }
-.actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -.02em; }
+h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1.05; text-wrap: balance; }
+h1 span { color: var(--accent); transition: color .3s; }
+.lead { max-width: 30em; margin: 18px auto 32px; color: var(--soft); font-size: clamp(17px, 2vw, 19px); }
+
 .button {
-  display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 24px;
-  border-radius: 8px; background: var(--accent); color: var(--on-accent);
-  font: 600 16px var(--body); text-decoration: none; transition: background .15s, transform .15s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 26px;
+  border: 1px solid transparent; border-radius: 10px; background: var(--accent); color: var(--bg);
+  font: 600 16px Inter, system-ui, sans-serif; text-decoration: none;
+  transition: filter .15s, transform .15s, background .3s;
 }
-.button:hover { background: var(--accent-hover); transform: translateY(-1px); }
-.button.ghost { background: rgba(255,255,255,.1); color: var(--text); }
-.button.ghost:hover { background: rgba(255,255,255,.18); }
-.note { margin: 14px 0 0; color: var(--soft); font-size: 14px; }
+.button:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.button svg { width: 18px; height: 18px; }
+.button.ghost { background: var(--card); border-color: var(--border); color: var(--text); }
+.button.ghost:hover { border-color: var(--border-strong); filter: none; }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.note { margin: 16px 0 0; color: var(--muted); font-size: 14px; }
 
-/* Figur aus CSS-Quadern, dreht sich mit dem Zeiger */
-.stage { height: 430px; display: grid; place-items: center; perspective: 1100px; cursor: grab; touch-action: pan-y; }
-.stage:active { cursor: grabbing; }
-.figure { --u: 11px; position: relative; width: calc(var(--u) * 16); height: calc(var(--u) * 32); transform-style: preserve-3d; transform: rotateX(var(--pitch, -4deg)) rotateY(var(--yaw, -22deg)); }
-.part { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); transform-style: preserve-3d; transform-origin: 50% var(--pivot, 50%); }
-.part > i { position: absolute; left: 0; top: 0; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); backface-visibility: hidden; }
-.part > .f, .part > .b { width: 100%; height: 100%; }
-.part > .f { transform: translateZ(calc(var(--d) * var(--u) / 2)); }
-.part > .b { transform: rotateY(180deg) translateZ(calc(var(--d) * var(--u) / 2)); filter: brightness(.68); }
-.part > .l, .part > .r { width: calc(var(--d) * var(--u)); height: 100%; left: calc(50% - var(--d) * var(--u) / 2); }
-.part > .l { transform: rotateY(-90deg) translateZ(calc(var(--w) * var(--u) / 2)); filter: brightness(.76); }
-.part > .r { transform: rotateY(90deg) translateZ(calc(var(--w) * var(--u) / 2)); filter: brightness(.86); }
-.part > .t, .part > .u { width: 100%; height: calc(var(--d) * var(--u)); top: calc(50% - var(--d) * var(--u) / 2); }
-.part > .t { transform: rotateX(90deg) translateZ(calc(var(--h) * var(--u) / 2)); filter: brightness(1.14); }
-.part > .u { transform: rotateX(-90deg) translateZ(calc(var(--h) * var(--u) / 2)); filter: brightness(.55); }
-.head { --x: 4; --y: 0; --w: 8; --h: 8; --d: 8; --c: #6f8f70; z-index: 2; transform: rotateX(var(--look-x, 0deg)) rotateY(var(--look-y, 0deg)); transform-origin: 50% 100%; }
-.face { position: absolute; inset: 0; }
-.face b { position: absolute; background: #0d160c; }
-.face .e1 { left: 18%; top: 38%; width: 16%; height: 16%; }
-.face .e2 { right: 18%; top: 38%; width: 16%; height: 16%; }
-.face .m { left: 26%; top: 66%; width: 48%; height: 11%; }
-.visor { position: absolute; left: 0; right: 0; top: 0; height: 26%; background: var(--accent); }
-.torso { --x: 4; --y: 8; --w: 8; --h: 12; --d: 4; --c: #2c3a30; }
-.mark { position: absolute; left: 31%; top: 18%; width: 38%; aspect-ratio: 1; background: var(--accent); }
-.arm { --y: 8; --w: 4; --h: 12; --d: 4; --c: #6f8f70; --pivot: 8%; }
-.arm-r { --x: 0; animation: wave 5.5s ease-in-out infinite; }
-.arm-l { --x: 12; }
-.leg { --y: 20; --w: 4; --h: 12; --d: 4; --c: #1c251f; }
-.leg-r { --x: 4; }
-.leg-l { --x: 8; }
-@keyframes wave {
-  0%, 62%, 100% { transform: rotateZ(4deg); }
-  70%, 78%, 86%, 94% { transform: rotateZ(146deg); }
-  74%, 82%, 90% { transform: rotateZ(118deg); }
+.themes { display: flex; justify-content: center; gap: 10px; margin-top: 40px; }
+.themes button {
+  width: 22px; height: 22px; padding: 0; border: 2px solid transparent; border-radius: 50%;
+  background: var(--c); cursor: pointer; transition: transform .15s, border-color .15s;
 }
-.shadow { position: absolute; left: 50%; bottom: 8px; width: 300px; height: 44px; translate: -50%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.6), transparent); transform: rotateX(0); pointer-events: none; }
-.stage-wrap { position: relative; }
+.themes button:hover { transform: scale(1.15); }
+.themes button[aria-pressed="true"] { border-color: var(--text); }
 
-section { padding-block: 72px; }
-.section-head { max-width: 40em; margin-bottom: 34px; }
-.section-head h2 { font-size: clamp(30px, 4.4vw, 44px); line-height: 1.12; }
-.section-head p { margin: 10px 0 0; color: var(--soft); font-size: 18px; }
+section { padding-block: 0 72px; }
+h2 { font-size: clamp(26px, 4vw, 36px); margin-bottom: 22px; }
 
-.showcase { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
-.shot { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
-.shot img { width: 100%; height: auto; }
-.shot figcaption { padding: 12px 16px; color: var(--soft); font-size: 14px; border-top: 1px solid var(--line); }
-.shot strong { color: var(--text); font-weight: 600; }
-.shot.half { grid-column: span 6; }
-
-.shots-note { margin: 12px 0 0; color: var(--soft); font-size: 14px; }
-
-.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--line); }
-.feature { padding: 26px; background: var(--panel); }
-.feature h3 { font-size: 19px; margin-bottom: 6px; }
-.feature p { margin: 0; color: var(--soft); font-size: 15px; }
-
-.changelog + .changelog { margin-top: 12px; }
-.changelog { display: grid; grid-template-columns: 170px 1fr; gap: 8px 24px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
-.changelog h3 { font-size: 20px; }
-.changelog time { display: block; color: var(--soft); font-size: 14px; margin-top: 2px; }
-.changelog ul { margin: 0; padding-left: 18px; color: var(--soft); }
-.changelog li + li { margin-top: 4px; }
-
-.beta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 36px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(115deg, #1b2a1c, var(--panel) 62%); }
-.beta h2 { font-size: clamp(28px, 4vw, 38px); }
-.beta p { margin: 8px 0 0; color: var(--soft); max-width: 34em; }
-
-.more { margin: 16px 0 0; font-size: 15px; }
-.more a { color: var(--text); }
-#download { padding-top: 0; }
-.beta .fine { font-size: 14px; }
-
-footer { padding-block: 34px 44px; border-top: 1px solid var(--line); color: var(--soft); font-size: 14px; }
-.footer-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
-footer a { color: var(--text); }
-footer p { margin: 12px 0 0; }
-
-@media (max-width: 860px) {
-  .hero { min-height: 0; }
-  .hero::after { background: linear-gradient(180deg, rgba(13,17,14,.72) 0%, rgba(13,17,14,.72) 56%, var(--bg) 100%); }
-  .hero-grid { grid-template-columns: minmax(0, 1fr); padding-block: 104px 32px; gap: 8px; }
-  .stage { height: 340px; }
-  .figure { --u: 8.4px; }
-  .shadow { width: 230px; }
-  .shot.half { grid-column: span 12; }
-  .features { grid-template-columns: repeat(2, 1fr); }
-  section { padding-block: 52px; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.card { padding: 22px; transition: border-color .2s; }
+.card:hover { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.icon {
+  display: grid; place-items: center; width: 38px; height: 38px; margin-bottom: 14px; border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent);
 }
+.icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.card h3 { font-size: 17px; margin-bottom: 4px; }
+.card p { margin: 0; color: var(--soft); font-size: 15px; }
 
+.release { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 6px 24px; padding: 22px; }
+.release + .release { margin-top: 10px; }
+.release h3 { font-size: 19px; }
+.release time { color: var(--muted); font-size: 14px; }
+.release ul { margin: 0; padding-left: 18px; color: var(--soft); }
+.tag { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 6px; background: var(--accent); color: var(--bg); font-size: 12px; font-weight: 600; vertical-align: 3px; }
+.more { margin: 14px 0 0; font-size: 15px; color: var(--soft); }
+
+.get { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px; padding: 32px; }
+.get p { margin: 6px 0 0; max-width: 34em; color: var(--soft); }
+.get .fine { color: var(--muted); font-size: 14px; }
+
+footer { padding-block: 28px 40px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
+footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--soft); }
+footer p { margin: 10px 0 0; }
+
+@media (max-width: 820px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 560px) {
-  .nav-links a:not(.keep) { display: none; }
-  .features { grid-template-columns: minmax(0, 1fr); }
-  .changelog { grid-template-columns: minmax(0, 1fr); }
-  .beta { padding: 26px; }
+  .links a:not(.keep) { display: none; }
+  .hero { padding-block: 40px 64px; }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .release { grid-template-columns: minmax(0, 1fr); }
+  .get { padding: 22px; }
   .button { width: 100%; }
 }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .arm-r { animation: none; }
-  .button { transition: none; }
+  * { transition: none !important; }
 }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <canvas id="landscape" width="480" height="270" aria-hidden="true"></canvas>
-  <nav class="nav wrap" aria-label="Main">
-    <a class="brand" href="#top" id="top">
-      <svg viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" rx="1.8" fill="#57b847"/><path d="M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z" fill="#0d160c"/></svg>
+<header class="wrap">
+  <nav aria-label="Main">
+    <a class="brand" href="#">
+      <svg viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" rx="1.8"/><path d="M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z" fill="#101116"/></svg>
       ZYROX
     </a>
-    <div class="nav-links">
+    <div class="links">
       <a href="#features">Features</a>
       <a href="#changelog">Changelog</a>
       <a class="keep" href="#download">Download</a>
     </div>
   </nav>
 
-  <div class="hero-grid wrap">
-    <div>
-      <p class="status"><i aria-hidden="true"></i> Windows · Version <span class="version">3.2.0</span></p>
-      <h1>Minecraft, without the clutter.</h1>
-      <p class="lead">A clean launcher with its own in-game client. Pick a profile and press Play.</p>
-      <div class="actions">
-        <a class="button dl" href="https://github.com/Sakulius/Zyrox/releases/latest">Download for Windows</a>
-        <a class="button ghost" href="#features">See features</a>
-      </div>
-      <p class="note">Free. No cheats. No admin rights needed.</p>
+  <div class="hero">
+    <p class="pill"><i aria-hidden="true"></i> Windows · Version <span class="version">3.6.1</span></p>
+    <h1>Minecraft, <span>without the clutter.</span></h1>
+    <p class="lead">A clean launcher with its own in-game client. Pick a profile and press Play.</p>
+    <div class="actions">
+      <a class="button dl" href="https://github.com/Sakulius/Zyrox/releases/latest">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>
+        Download for Windows
+      </a>
+      <a class="button ghost" href="#features">See features</a>
     </div>
-    <div class="stage-wrap">
-      <div class="stage" id="stage" aria-hidden="true">
-        <div class="figure" id="figure">
-          <div class="part leg leg-r"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
-          <div class="part leg leg-l"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
-          <div class="part torso"><i class="f"><span class="mark"></span></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
-          <div class="part arm arm-r"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
-          <div class="part arm arm-l"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
-          <div class="part head"><i class="f"><span class="visor"></span><span class="face"><b class="e1"></b><b class="e2"></b><b class="m"></b></span></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i><i class="u"></i></div>
-        </div>
-      </div>
-      <div class="shadow" aria-hidden="true"></div>
+    <p class="note">Free. No cheats. No admin rights needed.</p>
+    <div class="themes" role="group" aria-label="Accent color">
+      <button style="--c:#57b847" aria-label="Green" aria-pressed="true"></button>
+      <button style="--c:#4fa3f7" aria-label="Blue" aria-pressed="false"></button>
+      <button style="--c:#a98bfa" aria-label="Purple" aria-pressed="false"></button>
+      <button style="--c:#f5a342" aria-label="Orange" aria-pressed="false"></button>
+      <button style="--c:#f2716b" aria-label="Red" aria-pressed="false"></button>
+      <button style="--c:#f27fc0" aria-label="Pink" aria-pressed="false"></button>
+      <button style="--c:#3fcbd6" aria-label="Teal" aria-pressed="false"></button>
     </div>
   </div>
 </header>
 
-<main>
-  <section class="wrap" id="features">
-    <div class="section-head">
-      <h2>Everything you need, nothing you don't</h2>
-    </div>
-
-    <div class="features">
-      <article class="feature"><h3>One click to play</h3><p>Home is just your character, a profile picker and Play.</p></article>
-      <article class="feature"><h3>A profile for every setup</h3><p>Each one has its own mods, worlds, servers, gallery and settings. Share a setup as a single file.</p></article>
-      <article class="feature"><h3>Mods from Modrinth</h3><p>Find mods, modpacks, resource packs and shaders inside Zyrox. Works with Fabric, Forge and NeoForge.</p></article>
-      <article class="feature"><h3>Zyrox Client included</h3><p>A resizable HUD, zoom and auto sprint in game, on Minecraft 26.3. Press Right Shift to open the menu.</p></article>
-      <article class="feature"><h3>Cosmetics</h3><p>Capes, hats, body items and auras. Other Zyrox players see them too.</p></article>
-      <article class="feature"><h3>Music and lyrics</h3><p>See what's playing and follow the lyrics while you play.</p></article>
+<main class="wrap">
+  <section id="features">
+    <h2>Everything you need</h2>
+    <div class="grid">
+      <article class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M7 5v14l12-7z"/></svg></div>
+        <h3>One click to play</h3>
+        <p>Pick a profile, press Play. That's it.</p>
+      </article>
+      <article class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/></svg></div>
+        <h3>Profiles</h3>
+        <p>Own mods, worlds, servers and settings for every setup.</p>
+      </article>
+      <article class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></svg></div>
+        <h3>Mods from Modrinth</h3>
+        <p>Mods, modpacks, resource packs and shaders. Fabric, Forge and NeoForge.</p>
+      </article>
+      <article class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div>
+        <h3>Zyrox Client</h3>
+        <p>Glass HUD, PvP modules, zoom and waypoints. Press Right Shift in game.</p>
+      </article>
+      <article class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .8 3 3 3 6"/></svg></div>
+        <h3>Friends</h3>
+        <p>Add friends and see who is online, right from the menu.</p>
+      </article>
+      <article class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></div>
+        <h3>Cosmetics</h3>
+        <p>Capes, hats and auras that other Zyrox players see too.</p>
+      </article>
     </div>
   </section>
 
-  <section class="wrap" aria-label="Screenshots" style="padding-top:0">
-    <div class="showcase">
-      <figure class="shot half">
-        <img src="assets/skins.png" width="1180" height="720" alt="The Zyrox skins page with a purple skin shown as a 3D model next to the skin collection." loading="lazy">
-        <figcaption><strong>Skins.</strong> Keep a collection, preview in 3D and apply a skin to your account.</figcaption>
-      </figure>
-      <figure class="shot half">
-        <img src="assets/profiles.png" width="1180" height="720" alt="The Zyrox profiles page listing Vanilla, Fabric and NeoForge profiles." loading="lazy">
-        <figcaption><strong>Profiles.</strong> Separate worlds and mods for every setup. Names shown are examples.</figcaption>
-      </figure>
-    </div>
-    <p class="shots-note">Screenshots are from an earlier version. The current launcher looks different.</p>
-  </section>
-
-  <section class="wrap" id="changelog" style="padding-top:0">
-    <div class="section-head">
-      <h2>Changelog</h2>
-    </div>
-    <article class="changelog">
-      <div>
-        <h3>3.2.0</h3>
-        <time datetime="2026-11-06">November 6, 2026</time>
-      </div>
+  <section id="changelog">
+    <h2>Changelog</h2>
+    <article class="release glass">
+      <div><h3>3.6.1 <span class="tag">Beta</span></h3><time datetime="2026-11-07">November 7, 2026</time></div>
       <ul>
-        <li>New cosmetics menu with Capes, Hats, Body and Auras tabs.</li>
-        <li>Every item shows a preview, auras show their particle.</li>
-        <li>New hats: Rainbow Hat and Party Hat.</li>
+        <li>Friends and roles now also work on Minecraft 1.21.11.</li>
+        <li>Emotes are gone for now.</li>
       </ul>
     </article>
-    <article class="changelog">
-      <div>
-        <h3>3.1.0</h3>
-        <time datetime="2026-11-06">November 6, 2026</time>
-      </div>
+    <article class="release glass">
+      <div><h3>3.6.0 <span class="tag">Beta</span></h3><time datetime="2026-11-07">November 7, 2026</time></div>
       <ul>
-        <li>New 3D cosmetics: Cowboy Hat, Straw Hat, Hay Bale and Life Buoy.</li>
-        <li>Other Zyrox players see them too.</li>
+        <li>Friends list with online status.</li>
+        <li>Team roles with badges next to names.</li>
       </ul>
     </article>
-    <article class="changelog">
-      <div>
-        <h3>3.0.0</h3>
-        <time datetime="2026-11-06">November 6, 2026</time>
-      </div>
+    <article class="release glass">
+      <div><h3>3.5.0 <span class="tag">Beta</span></h3><time datetime="2026-11-07">November 7, 2026</time></div>
       <ul>
-        <li>New look that matches the in-game client, with a simpler Home.</li>
-        <li>Mods, worlds, servers, gallery and settings now open per profile.</li>
-        <li>HUD elements can be resized from 50 to 200 %.</li>
-        <li>Statistics and news are gone.</li>
+        <li>Zyrox Client now runs on Minecraft 26.3 and 1.21.11.</li>
+        <li>New main menu with news.</li>
       </ul>
     </article>
     <p class="more"><a href="https://github.com/Sakulius/Zyrox/releases">All releases on GitHub</a></p>
   </section>
 
-  <section class="wrap" id="download">
-    <div class="beta">
+  <section id="download">
+    <div class="get glass">
       <div>
-        <h2>Get Zyrox</h2>
-        <p>Run the installer, sign in with your Microsoft account and press Play. Zyrox offers new versions by itself.</p>
-        <p class="fine">Needs Windows 10 or newer. The installer is not signed, so Windows may show a SmartScreen warning: click "More info", then "Run anyway".</p>
+        <h2 style="margin:0">Get Zyrox</h2>
+        <p>Run the installer, sign in with Microsoft and press Play. Updates come by themselves.</p>
+        <p class="fine">Windows 10 or newer. If SmartScreen shows up, click "More info", then "Run anyway".</p>
       </div>
-      <a class="button dl" href="https://github.com/Sakulius/Zyrox/releases/latest">Download for Windows</a>
+      <a class="button dl" href="https://github.com/Sakulius/Zyrox/releases/latest">Download</a>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <div class="footer-row">
+    <div class="row">
       <span>Zyrox by Saku</span>
+      <span><a href="https://github.com/Sakulius/ZyroxClient">Client</a> · <a href="https://github.com/Sakulius/ZyroxLauncher">Launcher</a></span>
     </div>
-    <p>Zyrox is an independent project and is not affiliated with or endorsed by Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Synergies AB. You need your own copy of Minecraft: Java Edition.</p>
+    <p>Not affiliated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Synergies AB. You need your own copy of Minecraft: Java Edition.</p>
   </div>
 </footer>
 
@@ -324,92 +266,17 @@ fetch('https://api.github.com/repos/Sakulius/Zyrox/releases/latest')
   .catch(function () {});
 
 (function () {
-  var canvas = document.getElementById('landscape');
-  var ctx = canvas.getContext('2d');
-  var S = 6, COLS = 80, ROWS = 45;
-  var seed = 41;
-  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
-  function block(col, row, c, noise) {
-    if (col < 0 || col >= COLS || row < 0 || row >= ROWS) return;
-    for (var y = 0; y < S; y += 2) for (var x = 0; x < S; x += 2) {
-      var n = noise ? Math.round((rnd() * 2 - 1) * noise) : 0;
-      ctx.fillStyle = 'rgb(' + (c[0] + n) + ',' + (c[1] + n) + ',' + (c[2] + n) + ')';
-      ctx.fillRect(col * S + x, row * S + y, 2, 2);
-    }
+  var buttons = document.querySelectorAll('.themes button');
+  function pick(button) {
+    document.documentElement.style.setProperty('--accent', button.style.getPropertyValue('--c'));
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === button); });
+    try { localStorage.setItem('zyrox-accent', button.getAttribute('aria-label')); } catch (e) {}
   }
-  var r, c;
-  for (r = 0; r < ROWS; r++) {
-    var t = r / (ROWS - 1);
-    for (c = 0; c < COLS; c++) block(c, r, [38 + 214 * t | 0, 52 + 110 * t | 0, 112 + 10 * t | 0], 0);
-  }
-  for (r = 15; r < 21; r++) for (c = 68; c < 74; c++) block(c, r, [255, 214, 130], 3);
-  [[8, 6, 10], [64, 5, 12], [44, 9, 7]].forEach(function (m) {
-    for (c = m[0]; c < m[0] + m[2]; c++) block(c, m[1], [232, 190, 196], 2);
-    for (c = m[0] + 2; c < m[0] + m[2] - 2; c++) block(c, m[1] - 1, [244, 214, 214], 2);
-  });
-  function fillFrom(fn, color, noise) {
-    for (var col = 0; col < COLS; col++) for (var row = fn(col) | 0; row < ROWS; row++) block(col, row, color, noise);
-  }
-  fillFrom(function (x) { return 25 + 4 * Math.sin(x * .21) + 2 * Math.sin(x * .07 + 1.3); }, [66, 62, 112], 2);
-  fillFrom(function (x) { return 31 + 3 * Math.sin(x * .13 + 2) + 1.5 * Math.sin(x * .31); }, [38, 66, 74], 2);
-  var ground = [];
-  for (c = 0; c < COLS; c++) {
-    var top = (37 + 2.5 * Math.sin(c * .17 + .4) + 1.2 * Math.sin(c * .41)) | 0;
-    ground[c] = top;
-    for (r = top; r < ROWS; r++) {
-      var depth = r - top;
-      block(c, r, depth === 0 ? [82, 150, 62] : depth < 3 ? [112, 76, 50] : [88, 88, 92], depth === 0 ? 10 : 7);
-    }
-  }
-  [34, 47, 52, 66, 73].forEach(function (col) {
-    var base = ground[col], trunk = 4 + col % 2;
-    for (r = base - trunk; r < base; r++) block(col, r, [84, 58, 40], 6);
-    for (var dy = -trunk - 2; dy <= -trunk + 1; dy++) {
-      var rad = dy <= -trunk - 1 ? 1 : 2;
-      for (var dx = -rad; dx <= rad; dx++) block(col + dx, base + dy, [42, 104, 56], 9);
-    }
-  });
-
-  var stage = document.getElementById('stage');
-  var figure = document.getElementById('figure');
-  var head = figure.querySelector('.head');
-  var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var yaw = -22, pitch = -4, targetLookX = 0, targetLookY = 0, lookX = 0, lookY = 0;
-  var dragging = false, lastX = 0, lastY = 0, baseYaw = -22;
-
-  function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
-  function apply() {
-    figure.style.setProperty('--yaw', yaw + 'deg');
-    figure.style.setProperty('--pitch', pitch + 'deg');
-    head.style.setProperty('--look-x', lookX + 'deg');
-    head.style.setProperty('--look-y', lookY + 'deg');
-  }
-  stage.addEventListener('pointerdown', function (e) { dragging = true; lastX = e.clientX; lastY = e.clientY; stage.setPointerCapture(e.pointerId); });
-  stage.addEventListener('pointerup', function () { dragging = false; baseYaw = yaw; });
-  stage.addEventListener('pointercancel', function () { dragging = false; baseYaw = yaw; });
-  window.addEventListener('pointermove', function (e) {
-    if (dragging) {
-      yaw += (e.clientX - lastX) * .6;
-      pitch = clamp(pitch - (e.clientY - lastY) * .3, -28, 28);
-      lastX = e.clientX; lastY = e.clientY;
-      if (calm) apply();
-      return;
-    }
-    var box = figure.getBoundingClientRect();
-    targetLookY = clamp((e.clientX - (box.left + box.width / 2)) * .05, -32, 32);
-    targetLookX = clamp(-(e.clientY - (box.top + box.height * .13)) * .05, -18, 18);
-    if (calm) { lookX = targetLookX; lookY = targetLookY; apply(); }
-  });
-  apply();
-  if (calm) return;
-  var start = performance.now();
-  (function frame(now) {
-    if (!dragging) yaw = baseYaw + Math.sin((now - start) / 2400) * 9;
-    lookX += (targetLookX - lookX) * .08;
-    lookY += (targetLookY - lookY) * .08;
-    apply();
-    requestAnimationFrame(frame);
-  })(start);
+  buttons.forEach(function (b) { b.addEventListener('click', function () { pick(b); }); });
+  try {
+    var saved = localStorage.getItem('zyrox-accent');
+    buttons.forEach(function (b) { if (b.getAttribute('aria-label') === saved) pick(b); });
+  } catch (e) {}
 })();
 </script>
 </body>
