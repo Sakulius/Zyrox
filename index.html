@@ -74,6 +74,10 @@ h1 span { display: block; color: var(--accent); text-shadow: 0 0 34px color-mix(
 .cta:hover { transform: translateY(-2px); filter: brightness(1.08); }
 .cta svg { width: 18px; height: 18px; }
 .sub { display: inline-block; margin-top: 16px; color: var(--soft); font-size: 14px; }
+.stats { display: flex; flex-wrap: wrap; gap: 14px 40px; margin-top: 48px; }
+.stats div { display: grid; gap: 2px; }
+.stats b { font: 700 28px var(--pixel); }
+.stats span { font: 10px var(--tiny); color: var(--muted); }
 
 
 section { padding-block: 80px; }
@@ -88,6 +92,36 @@ h2 { margin: 0; font: 700 clamp(32px, 4.4vw, 50px)/1.05 var(--pixel); }
 .card svg { width: 30px; height: 30px; margin-bottom: 16px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: square; transition: stroke .3s; }
 .card h3 { margin: 0 0 6px; font: 700 21px var(--pixel); }
 .card p { margin: 0; color: var(--soft); font-size: 15px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.filters button {
+  height: 36px; padding: 0 16px; border: 1px solid var(--line); border-radius: 99px; background: rgba(255, 255, 255, .03);
+  color: var(--soft); font: 600 14px var(--body); cursor: pointer; transition: background .15s, color .15s, border-color .15s;
+}
+.filters button:hover { color: var(--ink); }
+.filters button[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 16%, transparent); border-color: color-mix(in srgb, var(--accent) 55%, transparent); color: var(--ink); }
+.card.dim { opacity: .3; transform: none; }
+.card { transition: border-color .2s, transform .2s, opacity .2s; }
+
+.split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; align-items: start; }
+.points { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.points li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: #0c0e17; }
+.points .num { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); font: 700 18px var(--pixel); }
+.points b { display: block; font: 700 19px var(--pixel); }
+.points span { color: var(--soft); font-size: 15px; }
+
+.faq { display: grid; gap: 10px; max-width: 820px; }
+.faq details { border: 1px solid var(--line); border-radius: 14px; background: #0c0e17; }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 22px; cursor: pointer; list-style: none; font: 600 17px var(--body); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 700 24px var(--pixel); color: var(--accent); transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { margin: 0; padding: 0 22px 20px; color: var(--soft); }
+
+.community { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.community article { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 30px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(160deg, #121628, #0b0d16); }
+.community svg { width: 34px; height: 34px; color: var(--accent); }
+.community h3 { margin: 4px 0 0; font: 700 26px var(--pixel); }
+.community p { margin: 0 0 8px; color: var(--soft); }
 
 .log { display: grid; gap: 12px; }
 .entry { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 6px 28px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 14px; background: #0c0e17; }
@@ -97,35 +131,40 @@ h2 { margin: 0; font: 700 clamp(32px, 4.4vw, 50px)/1.05 var(--pixel); }
 .entry li::marker { color: var(--accent); }
 .more { margin: 18px 0 0; color: var(--soft); font-size: 15px; }
 
-.get {
-  position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px;
-  padding: 48px; border-radius: 20px; overflow: hidden; isolation: isolate; border: 1px solid var(--line);
-  background: radial-gradient(70% 140% at 100% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%), #0c0e17;
+.final {
+  position: relative; isolation: isolate; overflow: hidden; margin-top: 40px; padding: 120px 0; text-align: center;
+  background: #0c1124 center bottom / cover no-repeat; image-rendering: pixelated;
 }
-.get::before {
-  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .5;
-  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: linear-gradient(90deg, transparent 30%, #000);
-  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000);
-}
-.get p { margin: 12px 0 0; max-width: 32em; color: var(--soft); }
-.get .fine { font-size: 14px; color: var(--muted); }
+.final::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--bg) 0%, rgba(7, 8, 13, .55) 35%, rgba(7, 8, 13, .7) 100%); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+.final .eyebrow { margin-bottom: 14px; }
+.final h2 { max-width: 14em; margin-inline: auto; font-size: clamp(34px, 5vw, 60px); }
+.final p { margin: 16px auto 32px; max-width: 30em; color: var(--soft); }
+.final .fine { margin: 18px auto 0; font-size: 14px; color: var(--muted); }
 
-footer { padding-block: 30px 44px; margin-top: 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
-footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--soft); }
-footer p { margin: 10px 0 0; }
+footer { padding-block: 56px 36px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.foot { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
+.foot .brand { margin-bottom: 12px; }
+.foot p { margin: 0; max-width: 24em; color: var(--soft); }
+.foot h4 { margin: 0 0 12px; font: 10px var(--tiny); color: var(--ink); }
+.foot ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.foot a { color: var(--soft); text-decoration: none; }
+.foot a:hover { color: var(--ink); }
+.base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); }
 
 @media (max-width: 980px) {
   .hero { min-height: 0; }
   .hero-grid { padding-bottom: 64px; }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .foot { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .foot > div:first-child { grid-column: 1 / -1; }
 }
 @media (max-width: 600px) {
   .links, .right .chip:not(.solid) { display: none; }
-  .cards { grid-template-columns: minmax(0, 1fr); }
+  .cards, .community { grid-template-columns: minmax(0, 1fr); }
   .entry { grid-template-columns: minmax(0, 1fr); }
-  .get { padding: 28px 22px; }
+  .foot { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .final { padding: 80px 0; }
   .cta { width: 100%; justify-content: center; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -146,7 +185,9 @@ footer p { margin: 10px 0 0; }
       </a>
       <div class="links">
         <a href="#features">Features</a>
+        <a href="#launcher">Launcher</a>
         <a href="#changelog">Changelog</a>
+        <a href="#faq">FAQ</a>
       </div>
     </div>
     <div class="right">
@@ -168,6 +209,11 @@ footer p { margin: 10px 0 0; }
       </a>
       <br>
       <span class="sub">Version <span class="version">3.6.1</span> · Windows 10+</span>
+      <div class="stats">
+        <div><b>26.3 · 1.21.11</b><span>Client versions</span></div>
+        <div><b>4 loaders</b><span>Vanilla, Fabric, Forge, NeoForge</span></div>
+        <div><b>Free</b><span>Open source, MIT</span></div>
+      </div>
     </div>
 
   </div>
@@ -177,16 +223,40 @@ footer p { margin: 10px 0 0; }
   <section id="features">
     <div class="head">
       <p class="eyebrow">Features</p>
-      <h2>Launcher and client in one</h2>
-      <p>Everything below comes with a single download.</p>
+      <h2>All of this in one download.</h2>
+    </div>
+    <div class="filters" role="group" aria-label="Filter features">
+      <button type="button" aria-pressed="true" data-filter="all">All</button>
+      <button type="button" aria-pressed="false" data-filter="launcher">Launcher</button>
+      <button type="button" aria-pressed="false" data-filter="client">Client</button>
+      <button type="button" aria-pressed="false" data-filter="social">Social</button>
     </div>
     <div class="cards">
-      <article class="card"><svg viewBox="0 0 24 24"><path d="M7 5v14l12-7z"/></svg><h3>One click to play</h3><p>Pick a profile, press Play. Home has nothing else on it.</p></article>
-      <article class="card"><svg viewBox="0 0 24 24"><path d="M3 4h18v6H3zM3 14h18v6H3z"/></svg><h3>Profiles</h3><p>Own mods, worlds, servers and settings for every setup.</p></article>
-      <article class="card"><svg viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9zM4 7.5 12 12l8-4.5M12 12v9"/></svg><h3>Mods from Modrinth</h3><p>Mods, modpacks, resource packs and shaders. Fabric, Forge and NeoForge.</p></article>
-      <article class="card"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg><h3>Zyrox Client</h3><p>Glass HUD, PvP modules, zoom and waypoints on 26.3 and 1.21.11.</p></article>
-      <article class="card"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .8 3 3 3 6"/></svg><h3>Friends</h3><p>Add friends and see who is online, right from the main menu.</p></article>
-      <article class="card"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg><h3>Cosmetics</h3><p>Capes, hats and auras that other Zyrox players see too.</p></article>
+      <article class="card" data-tag="launcher"><svg viewBox="0 0 24 24"><path d="M7 5v14l12-7z"/></svg><h3>One click to play</h3><p>Pick a profile, press Play. Home has nothing else on it.</p></article>
+      <article class="card" data-tag="launcher"><svg viewBox="0 0 24 24"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9zM4 7.5 12 12l8-4.5M12 12v9"/></svg><h3>Mods from Modrinth</h3><p>Mods, modpacks, resource packs and shaders, right inside the launcher.</p></article>
+      <article class="card" data-tag="client"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg><h3>HUD Editor</h3><p>Glass HUD modules you can drag, snap and resize from 50 to 200 %.</p></article>
+      <article class="card" data-tag="client"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><h3>PvP modules</h3><p>Combo, reach, TNT timer, item counter, armor and low health warnings.</p></article>
+      <article class="card" data-tag="client"><svg viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></svg><h3>Zoom and waypoints</h3><p>Hold C to zoom, press B to mark a spot. Fullbright and auto sprint too.</p></article>
+      <article class="card" data-tag="client"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM20 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg><h3>Music and lyrics</h3><p>See what's playing and follow the lyrics while you play.</p></article>
+      <article class="card" data-tag="social"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .8 3 3 3 6"/></svg><h3>Friends</h3><p>Add friends and see who is online, right from the main menu.</p></article>
+      <article class="card" data-tag="social"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg><h3>Cosmetics</h3><p>Capes, hats and auras that other Zyrox players see too.</p></article>
+      <article class="card" data-tag="social"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg><h3>Zyrox badge</h3><p>Spot other Zyrox players by the badge next to their name.</p></article>
+    </div>
+  </section>
+
+  <section id="launcher">
+    <div class="split">
+      <div class="head">
+        <p class="eyebrow">The launcher</p>
+        <h2>Set up once. Then just play.</h2>
+        <p>Zyrox keeps every setup apart, so a modpack never breaks your PvP profile.</p>
+      </div>
+      <ol class="points">
+        <li><span class="num">1</span><div><b>Every version on its own</b><span>Each profile has its own mods, worlds, servers, memory and settings.</span></div></li>
+        <li><span class="num">2</span><div><b>Mods in one click</b><span>Search Modrinth, install, update. Fabric, Forge and NeoForge.</span></div></li>
+        <li><span class="num">3</span><div><b>Several accounts</b><span>Sign in with Microsoft and switch accounts from the top bar.</span></div></li>
+        <li><span class="num">4</span><div><b>Updates by itself</b><span>New versions of the launcher and client arrive on their own.</span></div></li>
+      </ol>
     </div>
   </section>
 
@@ -212,28 +282,79 @@ footer p { margin: 10px 0 0; }
     <p class="more"><a href="https://github.com/Sakulius/Zyrox/releases">All releases on GitHub</a></p>
   </section>
 
-  <section id="download">
-    <div class="get">
-      <div>
-        <h2>Ready to play?</h2>
-        <p>Run the installer, sign in with Microsoft and press Play. Updates come by themselves.</p>
-        <p class="fine">If SmartScreen shows up, click "More info", then "Run anyway".</p>
-      </div>
-      <a class="cta dl" href="https://github.com/Sakulius/Zyrox/releases/latest">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>
-        Download for Windows
-      </a>
+  <section id="faq">
+    <div class="head">
+      <p class="eyebrow">FAQ</p>
+      <h2>Questions? Answers.</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Is Zyrox free?</summary><p>Yes. Launcher and client are free and open source under the MIT License.</p></details>
+      <details><summary>Do I need a Minecraft account?</summary><p>Yes. You sign in with the Microsoft account that owns Minecraft: Java Edition.</p></details>
+      <details><summary>Which versions are supported?</summary><p>The launcher starts any Minecraft version with Vanilla, Fabric, Forge or NeoForge. The Zyrox Client runs on Fabric for 26.3 and 1.21.11.</p></details>
+      <details><summary>Which systems does it run on?</summary><p>Windows 10 and newer.</p></details>
+      <details><summary>Is it a cheat client?</summary><p>No. Zyrox only adds HUD, quality of life and cosmetics.</p></details>
+      <details><summary>Where do I report bugs?</summary><p>Open an issue on GitHub for the <a href="https://github.com/Sakulius/ZyroxLauncher/issues">launcher</a> or the <a href="https://github.com/Sakulius/ZyroxClient/issues">client</a>.</p></details>
+    </div>
+  </section>
+
+  <section id="community" style="padding-top:0">
+    <div class="community">
+      <article>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 2.9.8.1-.6.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.7.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2"/></svg>
+        <h3>Open source</h3>
+        <p>Read the code, build it yourself or send a pull request.</p>
+        <a class="chip" href="https://github.com/Sakulius/ZyroxClient">View on GitHub</a>
+      </article>
+      <article>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M12 3 2 20h20zM12 10v4M12 17v.5"/></svg>
+        <h3>Issues</h3>
+        <p>Found a bug or have an idea? Report it and follow along.</p>
+        <a class="chip" href="https://github.com/Sakulius/ZyroxClient/issues">Go to issues</a>
+      </article>
     </div>
   </section>
 </main>
 
+<section class="final" id="download">
+  <div class="wrap">
+    <p class="eyebrow">Free, and playing in minutes</p>
+    <h2>Everything is set up. Get the launcher.</h2>
+    <p>Run the installer, sign in with Microsoft and press Play.</p>
+    <a class="cta dl" href="https://github.com/Sakulius/Zyrox/releases/latest">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg>
+      Download for Windows
+    </a>
+    <p class="fine">If SmartScreen shows up, click "More info", then "Run anyway".</p>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <div class="row">
-      <span>Zyrox by Saku</span>
-      <span><a href="https://github.com/Sakulius/ZyroxClient">Client</a> · <a href="https://github.com/Sakulius/ZyroxLauncher">Launcher</a></span>
+    <div class="foot">
+      <div>
+        <a class="brand" href="#">
+          <svg viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" rx="1.8"/><path d="M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z" fill="#07080d"/></svg>
+          ZYROX
+        </a>
+        <p>A free, clean Minecraft launcher with its own client. Made by Saku.</p>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul><li><a href="#changelog">Changelog</a></li><li><a href="https://github.com/Sakulius/Zyrox/releases">Releases</a></li><li><a href="#faq">FAQ</a></li></ul>
+      </div>
+      <div>
+        <h4>Source</h4>
+        <ul><li><a href="https://github.com/Sakulius/ZyroxClient">Client</a></li><li><a href="https://github.com/Sakulius/ZyroxLauncher">Launcher</a></li></ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul><li><a href="https://github.com/Sakulius/ZyroxLauncher/issues">Launcher issues</a></li><li><a href="https://github.com/Sakulius/ZyroxClient/issues">Client issues</a></li></ul>
+      </div>
     </div>
-    <p>Not affiliated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Synergies AB. You need your own copy of Minecraft: Java Edition.</p>
+    <div class="base">
+      <span>© 2026 Zyrox</span>
+      <span>Not affiliated with Mojang or Microsoft.</span>
+    </div>
   </div>
 </footer>
 
@@ -296,9 +417,22 @@ fetch('https://api.github.com/repos/Sakulius/Zyrox/releases/latest')
     ctx.fillStyle = rnd() > .5 ? '#0b1020' : '#05070d';
     ctx.fillRect(rnd() * W | 0, 156 + (rnd() * 8 | 0), 2, 2);
   }
+  document.querySelector('.final').style.backgroundImage = 'url(' + canvas.toDataURL() + ')';
 })();
 
 
+
+(function () {
+  var buttons = document.querySelectorAll('.filters button');
+  var cards = document.querySelectorAll('.card');
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.dataset.filter;
+      buttons.forEach(function (o) { o.setAttribute('aria-pressed', o === b); });
+      cards.forEach(function (c) { c.classList.toggle('dim', f !== 'all' && c.dataset.tag !== f); });
+    });
+  });
+})();
 </script>
 </body>
 </html>
