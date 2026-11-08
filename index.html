@@ -18,8 +18,6 @@
   --muted: #676d82;
   --line: rgba(255, 255, 255, .1);
   --panel: rgba(12, 14, 24, .86);
-  --tile: #161a2c;
-  --tile-on: color-mix(in srgb, var(--accent) 16%, #161a2c);
   --accent: #57b847;
   --pixel: "Pixelify Sans", monospace;
   --tiny: "Silkscreen", monospace;
@@ -63,7 +61,7 @@ nav { display: flex; align-items: center; justify-content: space-between; height
 .chip.solid { border-color: transparent; background: var(--accent); color: var(--bg); box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 45%, transparent); }
 .chip.solid:hover { filter: brightness(1.1); }
 
-.hero-grid { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; align-items: center; padding-block: 24px 96px; }
+.hero-grid { flex: 1; display: grid; grid-template-columns: minmax(0, 940px); gap: 48px; align-items: center; padding-block: 24px 96px; }
 h1 { margin: 0; font: 700 clamp(40px, 5.2vw, 72px)/1.04 var(--pixel); letter-spacing: -.01em; }
 h1 span { display: block; color: var(--accent); text-shadow: 0 0 34px color-mix(in srgb, var(--accent) 45%, transparent); transition: color .3s; }
 .lead { max-width: 27em; margin: 26px 0 32px; color: var(--soft); font-size: 19px; }
@@ -77,44 +75,6 @@ h1 span { display: block; color: var(--accent); text-shadow: 0 0 34px color-mix(
 .cta svg { width: 18px; height: 18px; }
 .sub { display: inline-block; margin-top: 16px; color: var(--soft); font-size: 14px; }
 
-.scene { perspective: 1400px; }
-.menu {
-  display: grid; grid-template-columns: 62px minmax(0, 1fr); border-radius: 18px; overflow: hidden;
-  border: 6px solid #1c2030; background: var(--panel); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 40px 80px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .08);
-  transform: rotateY(var(--ry, -9deg)) rotateX(var(--rx, 4deg)); transition: transform .4s ease-out;
-  font-family: var(--tiny);
-}
-.side { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 16px 0; border-right: 1px solid var(--line); }
-.side .logo { width: 26px; height: 26px; margin-bottom: 4px; }
-.side .logo rect { fill: var(--accent); transition: fill .3s; }
-.side button { display: grid; justify-items: center; gap: 2px; padding: 0; border: 0; background: none; color: var(--muted); font: 8px var(--tiny); cursor: pointer; }
-.side button svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: square; }
-.side button:hover, .side button.on { color: var(--ink); }
-.main { padding: 14px 16px 10px; min-width: 0; }
-.top { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; }
-.tab { padding: 6px 10px; border: 0; border-radius: 4px; background: none; color: var(--soft); font: 13px var(--tiny); cursor: pointer; }
-.tab.on { background: var(--tile-on); color: var(--ink); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent); }
-.search { margin-left: auto; width: 34%; min-width: 0; padding: 6px 10px; border: 1px solid var(--line); border-radius: 4px; background: rgba(0, 0, 0, .3); color: var(--ink); font: 11px var(--tiny); }
-.search::placeholder { color: var(--muted); }
-.mods { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-height: 300px; overflow: auto; align-content: start; padding-right: 4px; scrollbar-width: thin; scrollbar-color: #2a2f45 transparent; }
-.mod {
-  display: grid; grid-template-columns: 30px minmax(0, 1fr) 26px; gap: 10px; align-items: center; padding: 10px;
-  border: 1px solid var(--line); border-radius: 4px; background: var(--tile); color: var(--soft); text-align: left; cursor: pointer;
-  transition: background .15s, border-color .15s;
-}
-.menu button:focus { outline: none; }
-.mod:hover { border-color: rgba(255, 255, 255, .22); }
-.mod svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: square; }
-.mod b { display: block; color: var(--ink); font: 13px var(--tiny); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mod small { display: block; font: 9px/1.3 var(--tiny); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mod i { width: 26px; height: 14px; border-radius: 3px; background: #2a2f45; position: relative; transition: background .2s; }
-.mod i::after { content: ""; position: absolute; left: 2px; top: 2px; width: 10px; height: 10px; border-radius: 2px; background: var(--muted); transition: transform .2s, background .2s; }
-.mod[aria-pressed="true"] { background: var(--tile-on); border-color: color-mix(in srgb, var(--accent) 45%, transparent); color: var(--accent); }
-.mod[aria-pressed="true"] i { background: color-mix(in srgb, var(--accent) 40%, #2a2f45); }
-.mod[aria-pressed="true"] i::after { transform: translateX(12px); background: var(--accent); }
-.bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; font: 9px var(--tiny); color: var(--muted); }
-.online::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: var(--accent); transition: background .3s; }
 
 section { padding-block: 80px; }
 .head { max-width: 36em; margin-bottom: 36px; }
@@ -158,16 +118,11 @@ footer p { margin: 10px 0 0; }
 
 @media (max-width: 980px) {
   .hero { min-height: 0; }
-  .hero-grid { grid-template-columns: minmax(0, 1fr); padding-bottom: 64px; }
-  .menu { --ry: 0deg; --rx: 0deg; }
+  .hero-grid { padding-bottom: 64px; }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
   .links, .right .chip:not(.solid) { display: none; }
-  .menu { grid-template-columns: minmax(0, 1fr); }
-  .side { display: none; }
-  .mods { grid-template-columns: minmax(0, 1fr); height: 250px; }
-  .search { display: none; }
   .cards { grid-template-columns: minmax(0, 1fr); }
   .entry { grid-template-columns: minmax(0, 1fr); }
   .get { padding: 28px 22px; }
@@ -215,29 +170,6 @@ footer p { margin: 10px 0 0; }
       <span class="sub">Version <span class="version">3.6.1</span> · Windows 10+</span>
     </div>
 
-    <div class="scene">
-      <div class="menu" id="menu">
-        <div class="side">
-          <svg class="logo" viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" rx="1.8"/><path d="M2 2h4v1.2L3.7 4.8H6V6H2V4.8L4.3 3.2H2z" fill="#07080d"/></svg>
-          <button class="on" type="button"><svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>Mods</button>
-          <button type="button"><svg viewBox="0 0 24 24"><path d="M8 3 3 6l2 4 2-1v12h10V9l2 1 2-4-5-3c0 2-1.5 3-4 3S8 5 8 3z"/></svg>Cosm.</button>
-          <button type="button"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .8 3 3 3 6"/></svg>Friends</button>
-          <button type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>Setup</button>
-        </div>
-        <div class="main">
-          <div class="top">
-            <button class="tab on" type="button" data-tab="hud">HUD</button>
-            <button class="tab" type="button" data-tab="pvp">PvP</button>
-            <button class="tab" type="button" data-tab="util">Utility</button>
-            <input class="search" id="search" type="search" placeholder="Search..." aria-label="Search modules">
-          </div>
-          <div class="mods" id="mods"></div>
-          <div class="bottom">
-            <span class="online">2 friends online</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </header>
 
@@ -366,77 +298,6 @@ fetch('https://api.github.com/repos/Sakulius/Zyrox/releases/latest')
   }
 })();
 
-(function () {
-  var data = {
-    hud: [
-      ['Coordinates', 'Shows your position', 'M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12zM12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', 1],
-      ['FPS', 'Frames per second', 'M3 5h18v14H3zM7 9v6M7 9h3M7 12h2M13 9h3v3h-3v3', 1],
-      ['Keystrokes', 'Shows WASD and clicks', 'M9 4h6v6H9zM3 14h6v6H3zM9 14h6v6H9zM15 14h6v6h-6z', 1],
-      ['Armor', 'Durability at a glance', 'M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z', 0],
-      ['Music', 'Song and lyrics', 'M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM20 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z', 1],
-      ['Clock', 'Real time on screen', 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2', 0],
-      ['Ping', 'Your server latency', 'M4 20v-4M9 20v-8M14 20v-12M19 20V4', 0],
-      ['Scoreboard', 'Clean glass sidebar', 'M4 4h16v16H4zM8 9h8M8 13h8M8 17h5', 1]
-    ],
-    pvp: [
-      ['Combo', 'Counts your hits', 'M13 2 4 14h7l-1 8 9-12h-7z', 1],
-      ['Reach', 'Distance of your last hit', 'M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4', 1],
-      ['TNT Timer', 'Time until it blows', 'M9 3h6M12 3v3M12 21a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM12 10v4', 0],
-      ['Low Health', 'Warns when you are low', 'M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z', 1],
-      ['Item Counter', 'Pearls, gaps and more', 'M4 7h16v13H4zM8 7V4h8v3', 0],
-      ['Armor Warning', 'Alerts before it breaks', 'M12 3 2 20h20zM12 10v4M12 17v.5', 1],
-      ['Block Counter', 'Blocks left in hand', 'M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8', 1],
-      ['Hit Color', 'Tint on damage', 'M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z', 0]
-    ],
-    util: [
-      ['Zoom', 'Hold C to zoom in', 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5M11 8v6M8 11h6', 1],
-      ['Fullbright', 'See in the dark', 'M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 1v2M12 21v2M1 12h2M21 12h2M4 4l1.5 1.5M18.5 18.5 20 20M4 20l1.5-1.5M18.5 5.5 20 4', 0],
-      ['Auto Sprint', 'Never hold Ctrl again', 'M13 4a2 2 0 1 0 0 .1M9 20l3-6 3 2v5M6 12l3-4h5l3 4 3 1', 1],
-      ['Waypoints', 'Press B to mark a spot', 'M5 21V4h11l-2 4 2 4H5', 1],
-      ['Freelook', 'Look around while moving', 'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 0],
-      ['Edit HUD', 'Drag, snap and resize', 'M4 20h4L19 9l-4-4L4 16zM14 6l4 4', 1],
-      ['Screenshot', 'Copy shots in one key', 'M4 7h4l2-3h4l2 3h4v13H4zM12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', 0],
-      ['Toggle Sneak', 'Sneak without holding', 'M8 4h8l-2 8h4l-8 8 2-6H8z', 0]
-    ]
-  };
-  var mods = document.getElementById('mods'), search = document.getElementById('search'), tab = 'hud';
-  function render() {
-    var q = search.value.trim().toLowerCase();
-    var list = q ? data.hud.concat(data.pvp, data.util) : data[tab];
-    mods.innerHTML = '';
-    list.forEach(function (m) {
-      if (q && m[0].toLowerCase().indexOf(q) < 0) return;
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'mod';
-      b.setAttribute('aria-pressed', m[3] ? 'true' : 'false');
-      b.innerHTML = '<svg viewBox="0 0 24 24"><path d="' + m[2] + '"/></svg><span><b></b><small></small></span><i></i>';
-      b.querySelector('b').textContent = m[0];
-      b.querySelector('small').textContent = m[1];
-      b.addEventListener('click', function () { m[3] = m[3] ? 0 : 1; b.setAttribute('aria-pressed', m[3] ? 'true' : 'false'); });
-      mods.appendChild(b);
-    });
-  }
-  document.querySelectorAll('.tab').forEach(function (t) {
-    t.addEventListener('click', function () {
-      document.querySelectorAll('.tab').forEach(function (o) { o.classList.toggle('on', o === t); });
-      tab = t.dataset.tab;
-      search.value = '';
-      render();
-    });
-  });
-  search.addEventListener('input', render);
-  render();
-
-  var menu = document.getElementById('menu');
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.matchMedia('(min-width: 981px)').matches) {
-    window.addEventListener('pointermove', function (e) {
-      var x = e.clientX / window.innerWidth - .5, y = e.clientY / window.innerHeight - .5;
-      menu.style.setProperty('--ry', (-9 + x * 6) + 'deg');
-      menu.style.setProperty('--rx', (4 - y * 5) + 'deg');
-    });
-  }
-})();
 
 </script>
 </body>
