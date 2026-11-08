@@ -103,6 +103,7 @@ h1 span { display: block; color: var(--accent); text-shadow: 0 0 34px color-mix(
   border: 1px solid var(--line); border-radius: 4px; background: var(--tile); color: var(--soft); text-align: left; cursor: pointer;
   transition: background .15s, border-color .15s;
 }
+.menu button:focus { outline: none; }
 .mod:hover { border-color: rgba(255, 255, 255, .22); }
 .mod svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: square; }
 .mod b { display: block; color: var(--ink); font: 13px var(--tiny); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -114,9 +115,6 @@ h1 span { display: block; color: var(--accent); text-shadow: 0 0 34px color-mix(
 .mod[aria-pressed="true"] i::after { transform: translateX(12px); background: var(--accent); }
 .bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; font: 9px var(--tiny); color: var(--muted); }
 .online::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 6px; background: var(--accent); transition: background .3s; }
-.swatches { display: flex; gap: 5px; }
-.swatches button { width: 12px; height: 12px; padding: 0; border: 0; background: var(--c); cursor: pointer; }
-.swatches button[aria-pressed="true"] { outline: 2px solid var(--ink); outline-offset: 1px; }
 
 section { padding-block: 80px; }
 .head { max-width: 36em; margin-bottom: 36px; }
@@ -236,15 +234,6 @@ footer p { margin: 10px 0 0; }
           <div class="mods" id="mods"></div>
           <div class="bottom">
             <span class="online">2 friends online</span>
-            <div class="swatches" role="group" aria-label="Accent color">
-              <button style="--c:#57b847" aria-label="Green" aria-pressed="true"></button>
-              <button style="--c:#4fa3f7" aria-label="Blue" aria-pressed="false"></button>
-              <button style="--c:#a98bfa" aria-label="Purple" aria-pressed="false"></button>
-              <button style="--c:#f5a342" aria-label="Orange" aria-pressed="false"></button>
-              <button style="--c:#f2716b" aria-label="Red" aria-pressed="false"></button>
-              <button style="--c:#f27fc0" aria-label="Pink" aria-pressed="false"></button>
-              <button style="--c:#3fcbd6" aria-label="Teal" aria-pressed="false"></button>
-            </div>
           </div>
         </div>
       </div>
@@ -449,19 +438,6 @@ fetch('https://api.github.com/repos/Sakulius/Zyrox/releases/latest')
   }
 })();
 
-(function () {
-  var buttons = document.querySelectorAll('.swatches button');
-  function pick(button) {
-    document.documentElement.style.setProperty('--accent', button.style.getPropertyValue('--c'));
-    buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === button); });
-    try { localStorage.setItem('zyrox-accent', button.getAttribute('aria-label')); } catch (e) {}
-  }
-  buttons.forEach(function (b) { b.addEventListener('click', function () { pick(b); }); });
-  try {
-    var saved = localStorage.getItem('zyrox-accent');
-    buttons.forEach(function (b) { if (b.getAttribute('aria-label') === saved) pick(b); });
-  } catch (e) {}
-})();
 </script>
 </body>
 </html>
